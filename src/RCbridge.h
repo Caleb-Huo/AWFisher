@@ -1,0 +1,1 @@
+#define COMPILE_WITH_R 1
