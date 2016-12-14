@@ -2,7 +2,7 @@
 % Please edit documentation in R/AWFisher.R
 \name{AWFisher.pvalue}
 \alias{AWFisher.pvalue}
-\title{AW}
+\title{AWFisher}
 \usage{
 AWFisher.pvalue(p.values)
 }
@@ -24,10 +24,10 @@ fast computing for adaptively weighted fisher's method
 }
 \examples{
 n=154
-p.values = matrix(rbeta(n*100000, 1,1), ncol=n)
+p.values = matrix(rbeta(n*10000, 1,1), ncol=n)
 res = AWFisher.pvalue(p.values)
 hist(res$pvalues, breaks=40)
-table(res$sum.weight)
+table(rowSums(res$weights))
 pvalues=res$pvalues[order(res$pvalues)]
 plot(-log10((1:NROW(pvalues))/(1+NROW(pvalues))), -log10(pvalues),xlab="theoretical quantile", ylab="observed quantile")
 lines(c(0,100), c(0,100), col=2)

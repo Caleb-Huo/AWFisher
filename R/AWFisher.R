@@ -1,7 +1,7 @@
 ##' R package for fast computing for adaptively weighted fisher's method
 ##'
 ##' fast computing for adaptively weighted fisher's method
-##' @title AW
+##' @title AWFisher
 ##' @param p.values 1
 ##' @param method 1
 ##' @param log 1
