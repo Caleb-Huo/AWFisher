@@ -1,4 +1,4 @@
-aw.fisher.stat <- function(pstat, n, method, log=FALSE) {
+aw.fisher.stat <- function(pstat, n, method) {
     index = match(n, awFisherData[["nList"]])
 #    if(!is.na(index)) {
 #        quant = awFisherData[[method]][index,]
@@ -14,7 +14,7 @@ aw.fisher.stat <- function(pstat, n, method, log=FALSE) {
 
     ##### Estimating ###########
     f = splinefun(c(0,quant), c(0,awFisherData[["logPTarget"]]), method="monoH.FC")
-    if(log)  -f(pstat)  else exp(-f(pstat))
+    exp(-f(pstat))
 }
 
 
