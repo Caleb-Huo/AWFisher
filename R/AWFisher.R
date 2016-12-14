@@ -10,7 +10,7 @@
 ##' @export
 ##' @examples
 ##' n=154
-##' p.values = matrix(rbeta(n*100000, 1,1), ncol=n)
+##' p.values = matrix(rbeta(n*10000, 1,1), ncol=n)
 ##' res = AWFisher.pvalue(p.values)
 ##' hist(res$pvalues, breaks=40)
 ##' table(rowSums(res$weights))
