@@ -2,15 +2,16 @@
 ##'
 ##' fast computing for adaptively weighted fisher's method
 ##' @title AWFisher
-##' @param p.values 1
-##' @param method 1
-##' @param log 1
-##' @return 1
+##' @param p.values Input G by K p-value matrix. Each row represent a gene and each column represent a study.
+##' @return A list consisting of AWFisher pvalues and AWweight.
+##' \item{pvalues}{AWFisher pvalues.}
+##' \item{weights}{G by K binary weight matrix W. $W_{gk} = 1$ represents for gene $g$, study $k$ contributes to the meta-analysis result. $W_{gk} = 0$ otherwise.}
 ##' @author Caleb
 ##' @export
 ##' @examples
-##' n=154
-##' p.values = matrix(rbeta(n*10000, 1,1), ncol=n)
+##' K <- 154
+##' G <- 10000
+##' p.values = matrix(rbeta(K*G, 1,1), ncol=K)
 ##' res = AWFisher.pvalue(p.values)
 ##' hist(res$pvalues, breaks=40)
 ##' table(rowSums(res$weights))
