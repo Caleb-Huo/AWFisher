@@ -13,7 +13,7 @@
 ##' p.values = matrix(rbeta(n*100000, 1,1), ncol=n)
 ##' res = AWFisher.pvalue(p.values)
 ##' hist(res$pvalues, breaks=40)
-##' table(res$sum.weight)
+##' table(rowSums(res$weights))
 ##' pvalues=res$pvalues[order(res$pvalues)]
 ##' plot(-log10((1:NROW(pvalues))/(1+NROW(pvalues))), -log10(pvalues),xlab="theoretical quantile", ylab="observed quantile")
 ##' lines(c(0,100), c(0,100), col=2)
@@ -26,8 +26,7 @@ AWFisher.pvalue <- function(p.values) {
     out <- .C("AWpvalue", best_stat=rep(0, NROW(p.values)), sum_weight=as.integer(rep(0, NROW(p.values))), weights=as.integer(rep(0, length(p.values))),
                     pval=t(p.values), nrow=as.integer(NROW(p.values)), ncol=as.integer(NCOL(p.values)))
     bestStat <- out $ best_stat
-    sumWeight <- out $ sum_weight + 1
     weights <- t(matrix(out $ weights, ncol=NROW(p.values)))
-    list(pvalues = aw.fisher.stat(bestStat, n, method), weights = weights, sum.weight = sumWeight)
+    list(pvalues = aw.fisher.stat(bestStat, n), weights = weights)
 
 }

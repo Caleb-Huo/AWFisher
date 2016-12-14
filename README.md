@@ -1,4 +1,4 @@
-# AW
+# AWFisher
 fast computing for adaptively weighted fisher's method
 
 
@@ -9,12 +9,12 @@ fast computing for adaptively weighted fisher's method
 First you need R `devtools` package installed.
 * In command line:
 ```
-R -e "devtools::install_github(\"Caleb-Huo/AW\")"
+R -e "devtools::install_github(\"Caleb-Huo/AWFisher\")"
 ```
 * In R console
 ```R
 library(devtools)
-install_github("Caleb-Huo/AW")
+install_github("Caleb-Huo/AWFisher")
 ```
 
 

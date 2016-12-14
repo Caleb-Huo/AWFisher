@@ -84,7 +84,7 @@ double pchisq(double x, int df)
 
 
 extern "C" void AWpvalue(double *best_stat, int *sum_weight, int *weights, 
-	double *pval, char **method, int *nrow, int *ncol)
+	double *pval, int *nrow, int *ncol)
 {
 	int nr, nc, nc1, i, j, sw, cmp;
 	double *pv, *ptwice_pcumlog, twice_pcumlog, stat_new, best, a, b;
@@ -93,26 +93,6 @@ extern "C" void AWpvalue(double *best_stat, int *sum_weight, int *weights,
 	nr = *nrow;
 	nc = *ncol;
 	nc1 = nc - 1;
-
-	if (0 == strcmp(method[0], "original"))
-	{
-		cmp = 1;
-	}
-	else if (0 == strcmp(method[0], "uncond"))
-	{
-		cmp = 2;
-		printf("Incorrect method!\n");
-		return;
-	}
-	else if (0 == strcmp(method[0], "cond"))
-	{
-		cmp = 3;
-	}
-	else
-	{
-		printf("Incorrect method!\n");
-		return;
-	}
 
 	o = (int *)malloc(sizeof(int) * nc);
 	ptwice_pcumlog = (double *)malloc(sizeof(double) * nc);
@@ -125,57 +105,22 @@ extern "C" void AWpvalue(double *best_stat, int *sum_weight, int *weights,
 
 		sw = 0;
 
-		if (1 == cmp)
+		twice_pcumlog = -2. * log(pv[o[0]]);
+		best = pchisq(twice_pcumlog, 2);
+		for (j = 1; j < nc; ++j)
 		{
-			twice_pcumlog = -2. * log(pv[o[0]]);
-			best = pchisq(twice_pcumlog, 2);
-			for (j = 1; j < nc; ++j)
+			twice_pcumlog -= 2. * log(pv[o[j]]);
+			stat_new = pchisq(twice_pcumlog, j + j + 2);
+			if (stat_new < best)
 			{
-				twice_pcumlog -= 2. * log(pv[o[j]]);
-				stat_new = pchisq(twice_pcumlog, j + j + 2);
-				if (stat_new < best)
-				{
-					best = stat_new;
-					sw = j;
-				}
-
-			}
-			best_stat[i] = -log(best);
-			sum_weight[i] = sw;
-		}
-		else if (2 == cmp)
-		{
-
-		}
-		else if (3 == cmp)
-		{
-			ptwice_pcumlog[0] = -2. * log(pv[o[0]]);
-			for (j = 1; j < nc; ++j)
-			{
-				ptwice_pcumlog[j] = ptwice_pcumlog[j - 1] - 2. * log(pv[o[j]]);
+				best = stat_new;
+				sw = j;
 			}
 
-			best = pchisq(ptwice_pcumlog[nc1], nc + nc);
-//			sw = nc - 1;
-
-			for (j = 0; j < nc1; ++j)
-			{
-				a = ptwice_pcumlog[j];
-				b = ptwice_pcumlog[j + 1];
-				twice_pcumlog = a - (j + 1) * (b - a);
-				stat_new = pchisq(twice_pcumlog, j + j + 2);
-
-				if (stat_new < best)
-				{
-					best = stat_new;
-					sw = j;
-				}
-			}
-
-			best_stat[i] = -log(best);
-			sum_weight[i] = sw;
 		}
-
+		best_stat[i] = -log(best);
+		sum_weight[i] = sw;
+		
 		for (j = 0; j <= sw; ++j)
 		{
 			pw[o[j]] = 1;
