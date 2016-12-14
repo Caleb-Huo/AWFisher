@@ -86,8 +86,8 @@ double pchisq(double x, int df)
 extern "C" void AWpvalue(double *best_stat, int *sum_weight, int *weights, 
 	double *pval, int *nrow, int *ncol)
 {
-	int nr, nc, nc1, i, j, sw, cmp;
-	double *pv, *ptwice_pcumlog, twice_pcumlog, stat_new, best, a, b;
+	int nr, nc, nc1, i, j, sw;
+	double *pv, *ptwice_pcumlog, twice_pcumlog, stat_new, best;
 	int *o, *pw;
 
 	nr = *nrow;
