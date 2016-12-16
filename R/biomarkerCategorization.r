@@ -56,16 +56,6 @@ biomarkerCategorization <- function(studies,afunction,B=10,DEindex=NULL,seed = 1
 	weight.null <- NULL
 	selfDistDirection <- matrix(0,nrow=sum(DEindex),ncol = sum(DEindex))
 
-     E.score.full <- NULL
-    for(b in 1:B){
-
-  	  set.seed(15213+b)
-        ad = t(apply(d,1,function(x) sample(x)))
-  	  permRes <- ISKmeans(ad,K=K,gamma=gamma,alpha=alpha,group=group,penaltyInfo=groupInfos,silent=TRUE)
-  	  scoreperm <- sapply(permRes,function(x) x$obj0)
-  	  E.score.full <- rbind(E.score.full, scoreperm)
-    }
-
     if (!silence)
        cat("calculating permutated score, b = 1,2,..., B (= ", B, ")  [one \".\" per sample]:\n", sep = "")
 	for(b in 1:B){
