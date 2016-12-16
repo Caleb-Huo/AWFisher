@@ -3,3 +3,4 @@
 useDynLib(AWFisher) 
 export(AWFisher.pvalue)
 export(biomarkerCategorization)
+export(function_limma)
