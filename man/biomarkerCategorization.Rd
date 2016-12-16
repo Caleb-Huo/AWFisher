@@ -5,16 +5,16 @@
 \title{biomarker categrorization}
 \usage{
 biomarkerCategorization(studies, afunction, B = 10, DEindex = NULL,
-  seed = 15213)
+  seed = 15213, silence = FALSE)
 }
 \arguments{
 \item{studies}{a list of K studies. Each element (kth study) of the list is another list consisting gene expression matrix and and label information.}
 
 \item{afunction}{A function for DE analysis. Options can be function_limma or function_edgeR. Default option is function_limma. However, use could define their own function. The input of afunction should be list(data, label) which is consistent with one element of the studies list/argument. The return of afunction should be list(pvalue=apvalue, effectSize=aeffectsize)}
 
-\item{B}{number of permutation should be used}
+\item{B}{number of permutation should be used. B=1000 is suggested.}
 
-\item{DEindex}{If NULL, BH method will be applied to p-values and FDR 5% will be used. User could specify a logical vector as DEindex.}
+\item{DEindex}{If NULL, BH method will be applied to p-values and FDR 0.05 will be used. User could specify a logical vector as DEindex.}
 
 \item{seed}{Random seed to reproduce the result.}
 }
@@ -53,8 +53,10 @@ for(k in 1:K){
 }
 
 
-tmp11 <- biomarkerCategorization(studies,function_limma,B=100,DEindex=NULL,seed = 15213)
-
+result <- biomarkerCategorization(studies,function_limma,B=100,DEindex=NULL,seed = 15213)
+sum(result$DEindex)
+head(result$varibility)
+print(result$dissimilarity[1:4,1:4])
 }
 \author{
 Caleb
