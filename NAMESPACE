@@ -2,3 +2,4 @@
 
 useDynLib(AWFisher) 
 export(AWFisher.pvalue)
+export(biomarkerCategorization)

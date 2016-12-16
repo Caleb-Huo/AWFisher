@@ -39,7 +39,7 @@
 ##' tmp11 <- biomarkerCategorization(studies,function_limma,B=100,DEindex=NULL,seed = 15213)
 ##' 
 
-biomarkerCategorization <- function(studies,afunction,B=10,DEindex=NULL,seed = 15213){
+biomarkerCategorization <- function(studies,afunction,B=10,DEindex=NULL,seed = 15213, silence=FALSE){
 	if(is.null(DEindex)){
 		cat('generate DE index since it is NULL','\n')
 		res.obs <- getPvalueAll(studies, afunction)
@@ -54,9 +54,21 @@ biomarkerCategorization <- function(studies,afunction,B=10,DEindex=NULL,seed = 1
 	weight.null <- NULL
 	selfDistDirection <- matrix(0,nrow=sum(DEindex),ncol = sum(DEindex))
 
-	cat('permuting analysis:')
+     E.score.full <- NULL
+    for(b in 1:B){
+
+  	  set.seed(15213+b)
+        ad = t(apply(d,1,function(x) sample(x)))
+  	  permRes <- ISKmeans(ad,K=K,gamma=gamma,alpha=alpha,group=group,penaltyInfo=groupInfos,silent=TRUE)
+  	  scoreperm <- sapply(permRes,function(x) x$obj0)
+  	  E.score.full <- rbind(E.score.full, scoreperm)
+    }
+
+    if (!silence)
+       cat("calculating permutated score, b = 1,2,..., B (= ", B, ")  [one \".\" per sample]:\n", sep = "")
 	for(b in 1:B){
-		cat('.')
+    	  cat(".", if (b%%50 == 0)
+    	         paste(b, "\n"))
 		studies.b <- permuteLabels(studies, seed=seed+b)
 		res.null <- getPvalueAll(studies.b, afunction)
 		pval.null <- res.null$p.matrix
