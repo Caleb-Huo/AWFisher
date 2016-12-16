@@ -4,7 +4,7 @@
 ##' @title biomarker categrorization
 ##' @param studies a list of K studies. Each element (kth study) of the list is another list consisting gene expression matrix and and label information. 
 ##' @param afunction A function for DE analysis. Options can be function_limma or function_edgeR. Default option is function_limma. However, use could define their own function. The input of afunction should be list(data, label) which is consistent with one element of the studies list/argument. The return of afunction should be list(pvalue=apvalue, effectSize=aeffectsize)
-##' @param B number of permutation should be used
+##' @param B number of permutation should be used. B=1000 is suggested.
 ##' @param DEindex If NULL, BH method will be applied to p-values and FDR 5% will be used. User could specify a logical vector as DEindex.
 ##' @param seed Random seed to reproduce the result.
 ##' @return A list consisting of biomarker categrorization result.
@@ -36,8 +36,10 @@
 ##' }
 ##' 
 ##' 
-##' tmp11 <- biomarkerCategorization(studies,function_limma,B=100,DEindex=NULL,seed = 15213)
-##' 
+##' result <- biomarkerCategorization(studies,function_limma,B=100,DEindex=NULL,seed = 15213)
+##' sum(result$DEindex)
+##' head(result$varibility)
+##' print(result$dissimilarity[1:4,1:4])
 
 biomarkerCategorization <- function(studies,afunction,B=10,DEindex=NULL,seed = 15213, silence=FALSE){
 	if(is.null(DEindex)){
