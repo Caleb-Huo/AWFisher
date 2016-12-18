@@ -82,7 +82,7 @@ biomarkerCategorization <- function(studies,afunction,B=10,DEindex=NULL,seed = 1
 		Tscore = Tscore + (weight.null[[b]] - aveScore)^2/B
 	}
 
-	result <- list(varibility=Tscore, dissimilarity=selfDistDirection, DEindex=DEindex)
+	result <- list(varibility=Tscore, dissimilarity=selfDistDirection, AWres=awres.obs, DEindex=DEindex)
 	result
 
 }
