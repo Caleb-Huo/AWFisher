@@ -47,6 +47,7 @@ biomarkerCategorization <- function(studies,afunction,B=10,DEindex=NULL,seed = 1
 		res.obs <- getPvalueAll(studies, afunction)
 		pval.obs <- res.obs$p.matrix
 		awres.obs <- AWFisher.pvalue(pval.obs)
+		awres.obs$es <- res.obs$es.matrix
 		fdr.obs <- p.adjust(awres.obs$pvalues, 'BH')
 		DEindex <- fdr.obs <= 0.05
 	}
