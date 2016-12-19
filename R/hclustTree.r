@@ -7,7 +7,7 @@
 ##' @return a dendrogram. Note the the dendrogram is re-ordered by row mean of the dissimilarity matrix.
 ##' @author Caleb
 ##' @export
-##' examples
+##' @examples
 ##' N0 = 10
 ##' G <- 1000
 ##' GDEp <- 50
