@@ -17,7 +17,7 @@
 ##' K = 4
 ##'
 ##' studies <- NULL
-##' set.seed(15212)
+##' set.seed(15213)
 ##' for(k in 1:K){
 ##' 	astudy <- matrix(rnorm(N0*2*G),nrow=G,ncol=N0*2)
 ##' 	ControlLabel <- 1:N0

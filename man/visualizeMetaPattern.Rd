@@ -35,7 +35,7 @@ GDEn <- 50
 K = 4
 
 studies <- NULL
-set.seed(15212)
+set.seed(15213)
 for(k in 1:K){
 	astudy <- matrix(rnorm(N0*2*G),nrow=G,ncol=N0*2)
 	ControlLabel <- 1:N0
@@ -54,7 +54,7 @@ result <- biomarkerCategorization(studies,function_limma,B=100,DEindex=NULL,seed
 dissimilarity <- result$dissimilarity
 ddr <- hclustTree(dissimilarity)
 clusterMembership <- cutTree(ddr)
-visualizeMetaPattern(studies, result, clusterMembership,labRow='',labCol='',na.color=par("bg"),lwid=c(0.1,4), lhei=c(0.1,15),margins = c(1, 1))
+visualizeMetaPattern(studies, result, clusterMembership, labRow='',labCol='',na.color=par("bg"),lwid=c(0.1,4), lhei=c(0.1,15),margins = c(1, 1))
 }
 \author{
 Caleb
