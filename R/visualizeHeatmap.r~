@@ -1,0 +1,37 @@
+visualizeHeatmap <- function(dissimilarity, ddr, clusterMembership,...){
+	rainbow_fun <- function(n, c=90, l=50, ...) {
+	if(requireNamespace("colorspace")) {
+	colorspace::rainbow_hcl(n, c = c, l = l, ...)		
+		} else {
+			rainbow(n, ...)
+		}
+	}
+	
+	reorderLabel <- function(alabel,aorder){
+	  uniLab = unique(alabel)
+	  resLabel = NULL
+	  for(i in 1:length(uniLab)){
+	    resLabel[uniLab[i]==alabel]=aorder[i]
+	  }
+	  return(resLabel)
+	}
+	
+	anOrder <- order.dendrogram(ddr)
+	dissimilarity_order <- dissimilarity[anOrder,anOrder]
+	
+	clusterMembership_order <- clusterMembership[order.dendrogram(ddr)]
+	
+	colorBar <- NULL
+	membershipTable <- table(clusterMembership_order)
+	n <- length(membershipTable)
+	allColor <- rainbow_fun(n)
+	coll0 <- allColor[clusterMembership_order]
+	coll <- reorderLabel(coll0, allColor)
+	#allColor[n] <- '#777777'
+		
+	my_palette <- colorRampPalette(c("yellow2", "black", "skyblue"))(n = 300)
+		
+	heatmap.2(dissimilarity_order,ColSideColors = coll,col=my_palette, trace="none",Rowv=NA,Colv=NA,key=FALSE,...)	
+	
+}
+
