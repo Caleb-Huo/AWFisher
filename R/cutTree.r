@@ -6,16 +6,6 @@
 ##' @param K Maximum number of clusters.
 ##' @return clustering membership.
 ##' @author Caleb
-##' @exports
-##' @example
-##' How to struct hierarchical tree stucture from a dissimilarity matrix
-##'
-##' How to struct hierarchical tree stucture from a dissimilarity matrix
-##' @title hierarchical tree clustering
-##' @param dissimilarity Input dissimilarity matrix
-##' @param method hierarchical clustering method.
-##' @return a dendrogram. Note the the dendrogram is re-ordered by row mean of the dissimilarity matrix.
-##' @author Caleb
 ##' @export
 ##' @examples
 ##' N0 = 10

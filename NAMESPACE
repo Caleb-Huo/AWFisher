@@ -3,5 +3,6 @@
 useDynLib(AWFisher) 
 export(AWFisher.pvalue)
 export(biomarkerCategorization)
+export(cutTree)
 export(function_limma)
 export(hclustTree)
