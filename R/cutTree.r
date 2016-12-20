@@ -38,6 +38,7 @@
 
 cutTree <- function(ddr, K=10){
 	clusterMembership0 <- cutree(ddr,k=1:K) # it now works on a dendrogram
+	k <- 2
 	activeMembership <- unique(clusterMembership0[,k])
 	while(k<K){
 		print(k)
