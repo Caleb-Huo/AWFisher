@@ -28,7 +28,7 @@
 ##' 	caseLabel <- (N0 + 1):(2*N0)
 ##' 
 ##' 	astudy[1:GDEp,caseLabel] <- astudy[1:GDEp,caseLabel] + 2
-##' 	astudy[1:GDEp + GDEn,caseLabel] <- astudy[1:GDEp,caseLabel] - 2
+##' 	astudy[1:GDEp + GDEn,caseLabel] <- astudy[1:GDEp + GDEn,caseLabel] - 2
 ##' 
 ##' 	alabel = c(rep(0,length(ControlLabel)),rep(1,length(caseLabel)))
 ##' 
