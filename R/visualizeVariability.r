@@ -1,7 +1,7 @@
-##' visualize Weight Pattern
+##' visualizeVariability
 ##'
-##' visualize Weight Pattern
-##' @title visualize Weight Pattern
+##' visualizeVariability
+##' @title visualizeVariability
 ##' @param biomarkerCategorization biomarkerCategorization object from biomarkerCategorization function
 ##' @param clusterMembership clustering membership
 ##' @param groups re-order the module order.
@@ -36,29 +36,32 @@
 ##' dissimilarity <- result$dissimilarity
 ##' ddr <- hclustTree(dissimilarity)
 ##' clusterMembership <- cutTree(ddr)
-##' visualizeWeightPattern(result, clusterMembership,labRow='',labCol='',na.color=par("bg"),lwid=c(0.1,4), lhei=c(0.1,15),margins = c(1, 1))
+##' visualizeVariability(result, clusterMembership, labRow='',labCol='',na.color=par("bg"),lwid=c(0.1,4), lhei=c(0.1,15),margins = c(1, 1))
 ##'
-visualizeWeightPattern <- function(biomarkerCategorization, clusterMembership, groups=NULL,...){
+visualizeVariability <- function(biomarkerCategorization, clusterMembership, groups=NULL,...){
 	DEindex <- biomarkerCategorization$DEindex
 
 	if(is.null(groups)){
 		groups <- 1:length(unique(clusterMembership))
 	}
-	rowDataWeight <- NULL
 
-	AWres <- biomarkerCategorization$AWres
-
+	rowDataVariability <- NULL
 	for(i in groups){
 		## visualize the weight with direction
 		geneOrder <- order(rowSums(biomarkerCategorization$varibility[DEindex,])[clusterMembership==i])
 		acolor <- rainbow_fun(max(clusterMembership))[i]
 
-		aWeight <- (AWres$weights * sign(AWres$es))[DEindex,][clusterMembership==i,][geneOrder,]
-		rowDataWeight <- rbind(rowDataWeight,aWeight,matrix(NA,nrow=10,ncol=ncol(aWeight)))
+		## varibility score
+		avaribility <- biomarkerCategorization$varibility[DEindex,][clusterMembership==i,][geneOrder,]
+		## sum of varibility score
+		aRowVaribility <- rowMeans(avaribility)
+		aRowVariability <- cbind(avaribility,aRowVaribility)
+		rowDataVariability <- rbind(rowDataVariability,aRowVariability,matrix(NA,nrow=10,ncol=ncol(aRowVariability)))
 	}
 
-	my_palette <- colorRampPalette(c("yellow2", "black", "skyblue"))(n = 300)
-	heatmap.2(rowDataWeight,col=my_palette, trace="none",Rowv=NA,Colv=NA,key=FALSE,...)
+	B = 100
+	heatmap.2(rowDataVariability,col=gray.colors(B), trace="none",Rowv=NA,Colv=NA,key=FALSE, ...)
 
 }
+
 

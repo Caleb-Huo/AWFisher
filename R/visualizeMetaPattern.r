@@ -40,14 +40,6 @@
 ##' visualizeMetaPattern(studies, result, clusterMembership, labRow='',labCol='',na.color=par("bg"),lwid=c(0.1,4), lhei=c(0.1,15),margins = c(1, 1))
 
 visualizeMetaPattern <- function(studies, biomarkerCategorization, clusterMembership, groups=NULL,...){
-	rainbow_fun <- function(n, c=90, l=50, ...) {
-	if(requireNamespace("colorspace")) {
-	colorspace::rainbow_hcl(n, c = c, l = l, ...)		
-		} else {
-			rainbow(n, ...)
-		}
-	}
-	
 	DEindex <- biomarkerCategorization$DEindex
 	DEdata <- lapply(studies,function(x) {x$data <- x$data[DEindex,]; return(x)})
 
