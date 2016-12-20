@@ -36,10 +36,10 @@
 ##' dissimilarity <- result$dissimilarity
 ##' ddr <- hclustTree(dissimilarity)
 ##' clusterMembership <- cutTree(ddr)
-##' visualizeTree(ddr, clusterMembership)
+##' visualizeDissimilarity(dissimilarity, ddr, clusterMembership)
 ##'
 ##'
-visualizeHeatmap <- function(dissimilarity, ddr, clusterMembership,...){
+visualizeDissimilarity <- function(dissimilarity, ddr, clusterMembership,...){
 	rainbow_fun <- function(n, c=90, l=50, ...) {
 	if(requireNamespace("colorspace")) {
 	colorspace::rainbow_hcl(n, c = c, l = l, ...)
