@@ -1,6 +1,6 @@
 ##' How to struct hierarchical tree stucture from a dissimilarity matrix
 ##'
-##'  How to struct hierarchical tree stucture from a dissimilarity matrix
+##' How to struct hierarchical tree stucture from a dissimilarity matrix
 ##' @title hierarchical tree clustering
 ##' @param dissimilarity Input dissimilarity matrix
 ##' @param method hierarchical clustering method.
@@ -15,7 +15,7 @@
 ##' K = 4
 ##'
 ##' studies <- NULL
-##' set.seed(15213)
+##' set.seed(15212)
 ##' for(k in 1:K){
 ##' 	astudy <- matrix(rnorm(N0*2*G),nrow=G,ncol=N0*2)
 ##' 	ControlLabel <- 1:N0
@@ -33,6 +33,7 @@
 ##' result <- biomarkerCategorization(studies,function_limma,B=100,DEindex=NULL,seed = 15213)
 ##' dissimilarity <- result$dissimilarity
 ##' atree <- hclustTree(dissimilarity)
+##' plot(atree)
 
 hclustTree <- function(dissimilarity,method='ward.D'){
 	reorderfun=function(d, w) reorder(d, w)
