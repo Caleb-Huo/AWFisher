@@ -7,7 +7,7 @@ Author: Zhiguang Huo
 Maintainer: Zhiguang Huo <zhh18@pitt.edu>
 Description: Implementation by Zhiguang Huo
 License: GPL-3
-Depends: limma, dendextend, gplots, R (>= 2.10.1)
+Depends: limma, dendextend, gplots, cluster, R (>= 2.10.1)
 Packaged: 2016-08-02 01:12:24 UTC; caleb
 RoxygenNote: 5.0.1
 NeedsCompilation: no
