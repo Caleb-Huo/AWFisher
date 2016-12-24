@@ -92,7 +92,7 @@ tightClustPam <- function (adist, target, k.min, alpha = 0.1, beta = 0.6, top.ca
         i = 1
         D.temp <- Dbar
         res <- list()
-        while (i <= top.can * 2 && dim(D.temp)[1] > 0) {
+        while (i <= top.can * 2 && dim(as.matrix(D.temp))[1] > 1) {
             candidate.one <- find.candidates.one(D.temp)
             candidate <- extend.candidate(D.temp, candidate.one,
                 alpha = alpha)
