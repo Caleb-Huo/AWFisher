@@ -3,6 +3,7 @@
 useDynLib(AWFisher) 
 export(AWFisher.pvalue)
 export(biomarkerCategorization)
+export(function_edgeR)
 export(function_limma)
 export(visualizeMetaPattern)
 export(visualizeVariability)
