@@ -56,35 +56,37 @@ biomarkerCategorization <- function(studies,afunction,B=10,DEindex=NULL,fdr=NULL
 		DEindex <- fdr.obs <= fdr
 	}
 
+	Tscore <- 0
 	es.null <- NULL
 	pval.null <- NULL
 	weight.null <- NULL
 	selfDistDirection <- matrix(0,nrow=sum(DEindex),ncol = sum(DEindex))
 
-    if (!silence)
-       cat("calculating permutated score, b = 1,2,..., B (= ", B, ")  [one \".\" per sample]:\n", sep = "")
-	for(b in 1:B){
-    	  cat(".", if (b%%50 == 0)
-    	         paste(b, "\n"))
-		studies.b <- permuteLabels(studies, seed=seed+b)
-		res.null <- getPvalueAll(studies.b, afunction)
-		pval.null <- res.null$p.matrix
-		es.null <- res.null$es.matrix
+	if(B>=2){
+	    if (!silence)
+	       cat("calculating permutated score, b = 1,2,..., B (= ", B, ")  [one \".\" per sample]:\n", sep = "")
+		for(b in 1:B){
+	    	  cat(".", if (b%%50 == 0)
+	    	         paste(b, "\n"))
+			studies.b <- permuteLabels(studies, seed=seed+b)
+			res.null <- getPvalueAll(studies.b, afunction)
+			pval.null <- res.null$p.matrix
+			es.null <- res.null$es.matrix
 
-		awres.null <- AWFisher.pvalue(pval.null)
-		weight.null[[b]] <- awres.null$weights
+			awres.null <- AWFisher.pvalue(pval.null)
+			weight.null[[b]] <- awres.null$weights
 
-		aDEweightDirection <- (awres.null$weights * sign(es.null))[DEindex,]
-		maxDistDirection <- dist(aDEweightDirection,'maximum')
-		bselfDistDirection <- ifelse(as.matrix(maxDistDirection) == 0, 1, 0)
-		selfDistDirection <- selfDistDirection + as.matrix(bselfDistDirection)/B
-	} ## b for end of B
-	cat('\n', 'calculating variability index','\n')
+			aDEweightDirection <- (awres.null$weights * sign(es.null))[DEindex,]
+			maxDistDirection <- dist(aDEweightDirection,'maximum')
+			bselfDistDirection <- ifelse(as.matrix(maxDistDirection) == 0, 1, 0)
+			selfDistDirection <- selfDistDirection + as.matrix(bselfDistDirection)/B
+		} ## b for end of B
+		cat('\n', 'calculating variability index','\n')
 
-	Tscore <- 0
-	aveScore <- Reduce('+',weight.null)/B
-	for(b in 1:B){
-		Tscore = Tscore + (weight.null[[b]] - aveScore)^2/B
+		aveScore <- Reduce('+',weight.null)/B
+		for(b in 1:B){
+			Tscore = Tscore + (weight.null[[b]] - aveScore)^2/B
+		}		
 	}
 
 	result <- list(varibility=Tscore, dissimilarity=selfDistDirection, AWres=awres.obs, DEindex=DEindex)
