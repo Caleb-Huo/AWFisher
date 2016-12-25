@@ -47,6 +47,7 @@ biomarkerCategorization <- function(studies,afunction,B=10,DEindex=NULL,fdr=NULL
 	}
 	if(is.null(DEindex)){
 		cat('generate DE index since it is NULL','\n')
+		cat('based on AW fdr ',fdr,'\n')
 		res.obs <- getPvalueAll(studies, afunction)
 		pval.obs <- res.obs$p.matrix
 		awres.obs <- AWFisher.pvalue(pval.obs)
