@@ -41,7 +41,10 @@
 ##' head(result$varibility)
 ##' print(result$dissimilarity[1:4,1:4])
 
-biomarkerCategorization <- function(studies,afunction,B=10,DEindex=NULL,seed = 15213, silence=FALSE){
+biomarkerCategorization <- function(studies,afunction,B=10,DEindex=NULL,fdr=NULL,seed = 15213, silence=FALSE){
+	if(is.null(fdr)){
+		fdr = 0.05
+	}
 	if(is.null(DEindex)){
 		cat('generate DE index since it is NULL','\n')
 		res.obs <- getPvalueAll(studies, afunction)
@@ -49,7 +52,7 @@ biomarkerCategorization <- function(studies,afunction,B=10,DEindex=NULL,seed = 1
 		awres.obs <- AWFisher.pvalue(pval.obs)
 		awres.obs$es <- res.obs$es.matrix
 		fdr.obs <- p.adjust(awres.obs$pvalues, 'BH')
-		DEindex <- fdr.obs <= 0.05
+		DEindex <- fdr.obs <= fdr
 	}
 
 	es.null <- NULL
