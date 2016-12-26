@@ -39,7 +39,7 @@
 ##' clusterMembership <- cutTree(ddr)
 ##' visualizeMetaPattern(studies, result, clusterMembership, labRow='',labCol='',na.color=par("bg"),lwid=c(0.1,4), lhei=c(0.1,15),margins = c(1, 1))
 
-visualizeMetaPattern <- function(studies, biomarkerCategorization, clusterMembership, groups=NULL,...){
+visualizeMetaPattern <- function(studies, biomarkerCategorization, clusterMembership, ColSideColors=TRUE, groups=NULL,...){
 	DEindex <- biomarkerCategorization$DEindex
 	DEdata <- lapply(studies,function(x) {x$data <- x$data[DEindex,]; return(x)})
 
@@ -69,11 +69,16 @@ visualizeMetaPattern <- function(studies, biomarkerCategorization, clusterMember
 		allData <- rbind(allData,rowData, matrix(NA,nrow=10,ncol=ncol(rowData)))
 	}
 
-	colColor <- character(length(rowLabel))
-	colColor[is.na(rowLabel)] <- 'white'
-	colColor[rowLabel==1] <- 'black'
-	colColor[rowLabel==2] <- 'orange'
+	if(ColSideColors){
+		colColor <- character(length(rowLabel))
+		colColor[is.na(rowLabel)] <- 'white'
+		colColor[rowLabel==1] <- 'black'
+		colColor[rowLabel==2] <- 'orange'
 
-	heatmap.2(allData,ColSideColors = colColor,col="greenred", trace="none",Rowv=NA,Colv=NA,key=FALSE,...)
+		heatmap.2(allData,ColSideColors = colColor,col="greenred", trace="none",Rowv=NA,Colv=NA,key=FALSE,...)
+		
+	} else {
+		heatmap.2(allData,col="greenred", trace="none",Rowv=NA,Colv=NA,key=FALSE,...)
+	}
 }
 
