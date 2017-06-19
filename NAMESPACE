@@ -2,7 +2,6 @@
 
 useDynLib(AWFisher) 
 export(AWFisher.pvalue)
-export(AWFisher.pvalue2)
 export(biomarkerCategorization)
 export(function_edgeR)
 export(function_limma)
