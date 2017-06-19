@@ -7,6 +7,7 @@ awStatfiles1 <- gsub("awStat_k","",awStatfiles0)
 awStatfiles2 <- gsub(".rdata","",awStatfiles1)
 
 ks <- sort(as.numeric(awStatfiles2))
+# ks <- 2:31
 
 logPTarget <- NULL
 original <- NULL

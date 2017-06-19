@@ -23,9 +23,12 @@ if(F){
 }
 
 
-pTargetList <- c(seq(0.95,0.05, by=-0.05), 0.1^{2:10}, 1e-12,1e-15,1e-20,1e-30,1e-50,1e-80,1e-200)
+pTargetList0 <- c(seq(0.99,0.05, by=-0.01))
+pTargetList1 <- c(0.1^{2:10}, 1e-12,1e-15,1e-20,1e-30,1e-50,1e-80,1e-200)
+pTargetList <- c(pTargetList0, pTargetList1)
 
-awStats <- numeric(length(pTargetList))
+awStats0 <- numeric(length(pTargetList0))
+awStats1 <- numeric(length(pTargetList1))
 
 medianReturn <- function(a, n, k, seed = 15213) {
   set.seed(seed)
@@ -70,22 +73,32 @@ importantSampling <- function(a, n, k, pTarget, seed = 15213) {
   statOrdered <- statNew[ordStat]
   
   ## may be wrong
-  statOrdered[which(logProbNew <= -log(pTarget))[1]]
+  resultStat <- numeric(length(pTarget))
+  for(i in 1:length(pTarget)){
+  	resultStat[i] <- statOrdered[which(logProbNew <= -log(pTarget[i]))[1]]
+  }
+  resultStat
 }
 
 start <- Sys.time()
 cat("k =", k)
-for(i in 1:length(pTargetList)){
+
+awStats0 <- importantSampling(a=1, n=n1, k=k, pTarget= pTargetList0)
+
+
+for(i in 1:length(pTargetList1)){
   cat(".")
-  apTarget <- pTargetList[i]
-  if(apTarget >= 0.1){
+  apTarget <- pTargetList1[i]
+  if(apTarget >= 0.05){
     a <- 1
   } else {
     a <- uniroot(function(a, n, k, target) medianReturn(a, n, k) - -log(target), 
             lower=1e-10,upper=1, n=n0, k = k, target = apTarget)$root
   }
-  awStats[i] <- importantSampling(a, n=n1, k=k, pTarget= apTarget)
+  awStats1[i] <- importantSampling(a, n=n1, k=k, pTarget= apTarget)
 }
+awStats <- c(awStats0, awStats1)
+
 cat("\n")
 end <- Sys.time()
 timeDiff <- end - start
