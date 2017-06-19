@@ -82,7 +82,7 @@ for(i in 1:length(pTargetList)){
     a <- 1
   } else {
     a <- uniroot(function(a, n, k, target) medianReturn(a, n, k) - -log(target), 
-            lower=1e-10,upper=1, n=n, k = k, target = apTarget)$root
+            lower=1e-10,upper=1, n=n0, k = k, target = apTarget)$root
   }
   awStats[i] <- importantSampling(a, n=n1, k=k, pTarget= apTarget)
 }

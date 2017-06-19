@@ -11,4 +11,3 @@ Depends: limma, edgeR, gplots, tightClust, R (>= 2.10.1)
 Packaged: 2016-08-02 01:12:24 UTC; caleb
 RoxygenNote: 5.0.1
 NeedsCompilation: no
-LazyData: true

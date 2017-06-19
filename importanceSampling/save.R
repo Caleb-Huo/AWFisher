@@ -23,6 +23,10 @@ for(i in 1:length(ks)){
 	time <- c(time, results$time)
 }
 
+pdf("timeVsK.pdf")
+plot(ks, time)
+dev.off()
+
 sysdata = list(logPTarget=logPTarget, original=original, nList=ks)
 save(sysdata, file ="sysdata.rda", compress="xz")
 
