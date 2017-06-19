@@ -34,6 +34,6 @@ AWFisher.pvalue2 <- function(p.values) {
 	bestStat <- apply(awStat.all,1,max)
 	weights <- ifelse(orderMatrix - apply(awStat.all,1,which.max) <= 0, 1, 0)
 	
-    list(pvalues = aw.fisher.stat(bestStat, k), weights = weights)
+    list(pvalues = aw.fisher.stat2(bestStat, k), weights = weights)
 
 }
