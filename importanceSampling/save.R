@@ -2,9 +2,11 @@ WD <- "/mnt/glusterfs/zhh18/AW/AWFisher/importanceSampling"
 
 setwd(WD)
 
-dir()
+awStatfiles0 <- dir(pattern="awStat_")
+awStatfiles1 <- gsub("awStat_k","",awStatfiles0)
+awStatfiles2 <- gsub(".rdata","",awStatfiles1)
 
-ks <- 2:30
+ks <- sort(as.numeric(awStatfiles2))
 
 logPTarget <- NULL
 original <- NULL
