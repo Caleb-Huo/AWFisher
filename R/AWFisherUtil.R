@@ -18,22 +18,6 @@ aw.fisher.stat <- function(pstat, n) {
 }
 
 
-preDefList = exp(log(501)*(1:50)/50)-1
-uncondTopDist <- function(stat, n, which) {
-    estimates = pvalueTop(A=preDefList, n=n, m=which)
-    f = splinefun(c(0,preDefList), c(0,estimates), method="monoH.FC")
-    f(stat)
-}
-
-intFunc <- function(p,A,n,m) {
-    pchisq(A+2*m*log(p), 2*m, lower.tail=F)*dbeta(p, m+1, n-m)
-}
-pvalueTop <- Vectorize(function(A,n,m) {
-                pLim = exp(-A/(2*m))
-                -log(integrate(intFunc, lower=pLim,upper=1,A = A, n=n,m=m, stop.on.error=F,rel.tol=1e-3)$value
-                        + pbeta(pLim, m+1, n-m))}
-             )
-
 ######################
 ####  Data
 ######################
@@ -73,5 +57,4 @@ awFisherData = list(logPTarget=-log(c(0.99, 0.95,0.9,0.8,0.7,0.5,0.3,1e-1,1e-2,1
                               192.6559,194.5913,201.7345,209.2415,223.7879,239.5384,258.8478,297.156,352.8421,474.5017,
                             461.2872,462.3472,462.4968,462.8381,463.8254,463.8606,464.7668,464.4796,465.2994,465.9452,
                               467.9054,471.0704,474.8733,484.9073,498.1799,512.5592,541.8607,585.8783,651.6489,798.9819), ncol=17),            
-          nList = c(2:10,12,15,20,30,50,80,120,180,300,500,1000),
-          totalN = 100000)
+          nList = c(2:10,12,15,20,30,50,80,120,180,300,500,1000))
