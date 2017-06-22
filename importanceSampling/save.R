@@ -42,7 +42,7 @@ for(k in kRange){
 	bAWstat <- aAWstat[aP_order]
 	
 	if(is.null(logPTarget)){
-		logPTarget <- -log(aPTarget)
+		logPTarget <- -log(bPTarget)
 	} else {
 		stopifnot(all(logPTarget == -log(aPTarget)))
 	}
