@@ -55,18 +55,17 @@ medianReturn <- function(a, n, k, seed = 15213) {
 
 importantSampling <- function(a, n, k, pTarget, seed = 15213) {
   set.seed(seed)
-  pmatrix <- matrix(rbeta(n*k,a,1),n,k)
   
-  pCumLog <- pmatrix
+  pCumLog_K <- numeric(n)
+  statNew <- numeric(n)
   
   for(j in 1:n){
-    pCumLog[j,] <- cumsum(log(sort(pmatrix[j,])))
+    pCumLog0 <- cumsum(log(sort(rbeta(k,a,1))))
+	pCumLog_K[j] <- pCumLog0[k]
+	statNew[j] <- max(-pchisq(-2*pCumLog0, 2*(1:k), lower.tail=F, log=T))
   }
   
-  logweights <-  - k*log(a) - (a-1) * pCumLog[,k]
-  statNew = -pchisq(-2*pCumLog[,1], 2, lower.tail=F, log=T)
-  for(i in 2:k) 
-    statNew = pmax(statNew, -pchisq(-2*pCumLog[,i], 2*i, lower.tail=F, log=T))
+  logweights <-  - k*log(a) - (a-1) * pCumLog_K
   
   ordStat = order(-statNew)
   logProbNew = -log(cumsum(exp(logweights[ordStat]))/(n+1))

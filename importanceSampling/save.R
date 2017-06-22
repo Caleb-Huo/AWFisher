@@ -1,35 +1,64 @@
 WD <- "/mnt/glusterfs/zhh18/AW/AWFisher/importanceSampling"
 
-setwd(WD)
-
-awStatfiles0 <- dir(pattern="awStat_")
-awStatfiles1 <- gsub("awStat_k","",awStatfiles0)
-awStatfiles2 <- gsub(".rdata","",awStatfiles1)
-
-ks <- sort(as.numeric(awStatfiles2))
-# ks <- 2:31
+kRange <- seq(2,2,1)
 
 logPTarget <- NULL
 original <- NULL
 time <- NULL
 
-for(i in 1:length(ks)){
-	k <- ks[i]
-	fileName <- paste0("awStat_k",k,".rdata")
-	results <- get(load(fileName))
-	if(is.null(logPTarget)){
-		logPTarget <- -log(results$pTargetList)
-	} else {
-		stopifnot(all(logPTarget == -log(results$pTargetList)))
+n1 <- NULL
+n0 <- NULL
+
+for(k in kRange){
+	awStatFolder_k <- paste0('k',k)
+	setwd(WD)
+	setwd(awStatFolder_k)
+	awStatFiles_p <- dir(pattern="awStat_")
+
+	aPTarget <- NULL
+	aAWstat <- NULL
+	time0 <- Sys.time()
+	timeDiff <- time0 - time0
+	
+	for(aawStatFiles_p in awStatFiles_p){
+		results <- get(load(aawStatFiles_p))
+		aPTarget <- c(aPTarget, results$apTarget)
+		aAWstat <- c(aAWstat, results$awStats)
+		timeDiff <- timeDiff + results$time
+		if(is.null(n1)){
+			n1 <- results$n1
+		} else {
+			stopifnot(all(n1 == results$n1))			
+		}
+		if(is.null(n0)){
+			n0 <- results$n0
+		} else {
+			stopifnot(all(n0 == results$n0))			
+		}
 	}
-	original <- rbind(original, results$awStats)
-	time <- c(time, results$time)
+	
+	aP_order <- order(-aPTarget)
+	bPTarget <- aPTarget[aP_order]
+	bAWstat <- aAWstat[aP_order]
+	
+	if(is.null(logPTarget)){
+		logPTarget <- -log(aPTarget)
+	} else {
+		stopifnot(all(logPTarget == -log(aPTarget)))
+	}
+	
+	original <- rbind(original, bAWstat)
+	time <- c(time, as.double(timeDiff,units="hours"))
+	
 }
 
+rownames(original) <- kRange
+
+setwd(WD)
 pdf("timeVsK.pdf")
-plot(ks, time)
+plot(kRange, time)
 dev.off()
 
-sysdata = list(logPTarget=logPTarget, original=original, nList=ks)
+sysdata = list(logPTarget=logPTarget, original=original, nList=kRange, n1=n1, n0=n0)
 save(sysdata, file ="sysdata.rda", compress="xz")
 
