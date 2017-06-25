@@ -1,6 +1,6 @@
 WD <- "/mnt/glusterfs/zhh18/AW/AWFisher/importanceSampling"
 
-kRange <- seq(2,2,1)
+kRange <- seq(2,3,1)
 
 logPTarget <- NULL
 original <- NULL
@@ -44,7 +44,7 @@ for(k in kRange){
 	if(is.null(logPTarget)){
 		logPTarget <- -log(bPTarget)
 	} else {
-		stopifnot(all(logPTarget == -log(aPTarget)))
+		stopifnot(all(logPTarget == -log(bPTarget)))
 	}
 	
 	original <- rbind(original, bAWstat)

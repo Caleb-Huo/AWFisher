@@ -1,7 +1,7 @@
 cd '/mnt/glusterfs/zhh18/AW/AWFisher/importanceSampling'
 
 n0=1e3
-n1=1e8
+n1=1e7
 
 for a in {1..50}
 do
@@ -14,7 +14,7 @@ done
 cd '/mnt/glusterfs/zhh18/AW/AWFisher/importanceSampling'
 
 n0=1e3
-n1=1e8
+n1=1e7
 
 for a in {1..49}
 do
