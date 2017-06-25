@@ -58,7 +58,7 @@ medianReturn <- function(a, n, k, seed = 15213) {
 }
 
 	
-cl<-makeCluster(25)
+cl<-makeCluster(28)
 registerDoParallel(cl)
 
 result <- foreach(p = 1:length(pTargetList)) %dopar% {	

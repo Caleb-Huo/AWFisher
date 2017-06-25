@@ -10,3 +10,5 @@ export(visualizeVariability)
 export(visualizeWeightPattern)
 export(AWFisher_close2)
 export(AWFisher_permutation)
+export(AWFisher_permutation_time)
+
