@@ -67,7 +67,7 @@ result <- foreach(p = 1:length(pTargetList)) %dopar% {
 	system(paste("mkdir -p", kFolder))
 	setwd(kFolder)
 		
-	
+	## problematic
     a <- uniroot(function(a, n, k, target) medianReturn(a, n, k) - -log(target), 
             lower=1e-10,upper=1e3, n=n0, k = k, target = apTarget)$root		
 
@@ -84,7 +84,6 @@ result <- foreach(p = 1:length(pTargetList)) %dopar% {
 }
 
 stopCluster(cl)
-
 
 
 #g++ -I/usr/include/R -DNDEBUG   -std=c++11   -fpic  -g -O2 -fstack-protector --param=ssp-buffer-size=4 -Wformat -Wformat-security -Werror=format-security -D_FORTIFY_SOURCE=2 -g  -c importanceSampling.cpp -o importanceSampling.o
