@@ -1,6 +1,6 @@
 WD <- "/mnt/glusterfs/zhh18/AW/AWFisher/importanceSampling"
 
-kRange <- seq(2,96,1)
+kRange <- seq(2,100,1)
 
 logPTarget <- NULL
 original <- NULL
