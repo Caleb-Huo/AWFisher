@@ -26,8 +26,8 @@ install_github("Caleb-Huo/AWFisher", ref="metaPattern", build_vignettes=TRUE) ##
 [https://github.com/Caleb-Huo/AWFisher/releases/tag/m1.0.0](https://github.com/Caleb-Huo/AWFisher/releases/tag/m1.0.0)
     - Install this downloaded package directly.
 ```R
-install.packages("AWFisher_p1.0.0.tar.gz",repos=NULL,type="source") ## smaller package, only for AW-Fisher p-value calculation
-install.packages("AWFisher_m1.0.0.tar.gz",repos=NULL,type="source")  ## For metaPattern
+install.packages("AWFisher-p1.0.0.tar.gz",repos=NULL,type="source") ## smaller package, only for AW-Fisher p-value calculation
+install.packages("AWFisher-m1.0.0.tar.gz",repos=NULL,type="source")  ## For metaPattern
 ```
 
 ## How to use this R package (Under development):
