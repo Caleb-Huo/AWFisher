@@ -5,3 +5,4 @@ aw.fisher.stat <- function(pstat, n) {
     f = splinefun(c(0,sysdata$original[index,]), c(0,sysdata[["logPTarget"]]), method="monoH.FC")
     exp(-f(pstat))
 }
+
