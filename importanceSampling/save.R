@@ -1,3 +1,4 @@
+WD <- "/mnt/glusterfs/zhh18/AW/AWFisher/importanceSampling_tmp"
 WD <- "/mnt/glusterfs/zhh18/AW/AWFisher/importanceSampling"
 
 kRange <- seq(2,100,1)
@@ -51,6 +52,8 @@ for(k in kRange){
 	time <- c(time, as.double(timeDiff,units="hours"))
 	
 }
+
+sum(time)
 
 rownames(original) <- kRange
 
