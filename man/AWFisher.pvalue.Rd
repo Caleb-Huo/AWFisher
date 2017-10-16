@@ -21,7 +21,7 @@ R package for fast computing for adaptively weighted fisher's method
 fast computing for adaptively weighted fisher's method
 }
 \examples{
-K <- 80
+K <- 40
 G <- 10000
 p.values = matrix(rbeta(K*G, 1,1), ncol=K)
 res = AWFisher.pvalue(p.values)
