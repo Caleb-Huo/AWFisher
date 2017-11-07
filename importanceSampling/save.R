@@ -1,4 +1,4 @@
-WD <- "/mnt/glusterfs/zhh18/AW/AWFisher/importanceSampling_tmp"
+#WD <- "/mnt/glusterfs/zhh18/AW/AWFisher/importanceSampling_tmp"
 WD <- "/mnt/glusterfs/zhh18/AW/AWFisher/importanceSampling"
 
 kRange <- seq(2,100,1)
