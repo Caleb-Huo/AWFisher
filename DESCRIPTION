@@ -7,8 +7,7 @@ Author: Zhiguang Huo
 Maintainer: Zhiguang Huo <zhuo@ufl.edu>
 Description: Implementation by Zhiguang Huo
 License: GPL-3
-Depends: R (>= 2.10.1)
-Suggests: limma, edgeR, gplots, tightClust
+Depends: limma, edgeR, gplots, tightClust, R (>= 2.10.1)
 Packaged: 2017-11-07 01:12:24 UTC; caleb
 RoxygenNote: 5.0.1
 NeedsCompilation: no
