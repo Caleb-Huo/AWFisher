@@ -2,12 +2,13 @@ Package: AWFisher
 Type: Package
 Title: An R package for fast computing for adaptively weighted fisher's method
 Version: 0.0.0
-Date: 2016-12-14
+Date: 2017-11-07
 Author: Zhiguang Huo
-Maintainer: Zhiguang Huo <zhh18@pitt.edu>
+Maintainer: Zhiguang Huo <zhuo@ufl.edu>
 Description: Implementation by Zhiguang Huo
 License: GPL-3
-Depends: limma, edgeR, gplots, tightClust, R (>= 2.10.1)
-Packaged: 2016-08-02 01:12:24 UTC; caleb
+Depends: R (>= 2.10.1)
+Suggests: limma, edgeR, gplots, tightClust
+Packaged: 2017-11-07 01:12:24 UTC; caleb
 RoxygenNote: 5.0.1
 NeedsCompilation: no
