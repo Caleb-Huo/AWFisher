@@ -40,3 +40,6 @@ vignettes/*.pdf
 *.o
 *.rds
  
+## mac files
+*.DS_Store
+*/*.DS_Store
