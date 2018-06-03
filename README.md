@@ -8,7 +8,6 @@ First you need R `devtools` package installed.
 ```
 
 * In R console
-```R
+
 library(devtools)
 install_github("Caleb-Huo/AWFisher") 
-```
