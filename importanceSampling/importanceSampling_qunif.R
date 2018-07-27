@@ -1,5 +1,6 @@
-WD <- "/mnt/glusterfs/zhh18/AW/AWFisher/importanceSampling"
-
+WD0 <- "/data/home/zhuo/research/Tseng/AW/sysdata"
+WD <- "/data/home/zhuo/research/Tseng/AW/sysdata/data"
+dir.create(WD)
 setwd(WD)
 
 library(foreach)
@@ -21,7 +22,7 @@ cat("n0: ", n0, "\n")
 if(F){
 	n0 <- 1e3
 	n1 <- 1e6
-	k <- 2
+	k <- 5
 }
 
 
@@ -60,14 +61,16 @@ medianReturn <- function(a, n, k, pmatrix0) {
 }
 
 	
-cl<-makeCluster(28)
+cl<-makeCluster(33)
 registerDoParallel(cl)
 
 result <- foreach(p = 1:length(pTargetList)) %dopar% {	
 	apTarget <- pTargetList[[p]]
 
-	setwd(WD)
+	setwd(WD0)
 	dyn.load('importanceSampling.so')
+
+	setwd(WD)
 	kFolder <- paste0("k",k)
 	system(paste("mkdir -p", kFolder))
 	setwd(kFolder)
@@ -81,8 +84,7 @@ result <- foreach(p = 1:length(pTargetList)) %dopar% {
 	            lower=1e-10,upper=1, n=n0, k = k, target = apTarget)$root		
 	}
 	awStats <- .C('importanceSampling_R',a=as.double(a),n=as.integer(n1),k=as.integer(k),
-				pTarget=as.double(apTarget),J=as.integer(length(apTarget)),awStat_vec=as.double(apTarget))$awStat_vec
-				
+				pTarget=as.double(apTarget),J=as.integer(length(apTarget)),awStat_vec=as.double(apTarget))$awStat_vec				
 	end <- Sys.time()
 	timeDiff <- end - start
 	results <- list(apTarget=apTarget, awStats=awStats, k=k, n1=n1, n0=n0, time=timeDiff)
@@ -97,6 +99,9 @@ stopCluster(cl)
 #g++ -I/usr/include/R -DNDEBUG   -std=c++11   -fpic  -g -O2 -fstack-protector --param=ssp-buffer-size=4 -Wformat -Wformat-security -Werror=format-security -D_FORTIFY_SOURCE=2 -g  -c importanceSampling_debugChuck.cpp -o importanceSampling_debugChuck.o
 #R CMD SHLIB importanceSampling_debugChuck.cpp
 
-#g++ -I/usr/include/R -DNDEBUG   -std=c++11   -fpic  -g -O2 -fstack-protector --param=ssp-buffer-size=4 -Wformat -Wformat-security -Werror=format-security -D_FORTIFY_SOURCE=2 -g  -c importanceSampling.cpp -o importanceSampling.o
-#R CMD SHLIB importanceSampling.cpp
+
+
+# cd /data/home/zhuo/research/Tseng/AW/sysdata
+# g++ -I/usr/share/R/include -DNDEBUG   -std=c++11   -fpic  -g -O2 -fstack-protector --param=ssp-buffer-size=4 -Wformat -Wformat-security -Werror=format-security -D_FORTIFY_SOURCE=2 -g  -c importanceSampling.cpp -o importanceSampling.o
+# R CMD SHLIB importanceSampling.cpp
 

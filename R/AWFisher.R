@@ -6,6 +6,7 @@
 ##' @return A list consisting of AWFisher pvalues and AWweight.
 ##' \item{pvalues}{AWFisher pvalues.}
 ##' \item{weights}{G by K binary weight matrix W. $W_{gk} = 1$ represents for gene $g$, study $k$ contributes to the meta-analysis result. $W_{gk} = 0$ otherwise.}
+##' @useDynLib AWFisher
 ##' @author Caleb
 ##' @export
 ##' @examples
