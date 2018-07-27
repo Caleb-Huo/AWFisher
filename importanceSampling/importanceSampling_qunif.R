@@ -1,5 +1,5 @@
 WD0 <- "/data/home/zhuo/research/Tseng/AW/sysdata"
-WD <- "/data/home/zhuo/research/Tseng/AW/sysdata/data"
+WD <- "/data/home/zhuo/research/Tseng/AW/sysdata/"
 dir.create(WD)
 setwd(WD)
 
@@ -22,7 +22,8 @@ cat("n0: ", n0, "\n")
 if(F){
 	n0 <- 1e3
 	n1 <- 1e6
-	k <- 5
+	k <- 32
+	k <- 109
 }
 
 
