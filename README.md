@@ -15,6 +15,8 @@ install_github("Caleb-Huo/AWFisher")
 ## Short tutorial
 
 ```{R}
+library(AWFisher)
+
 K <- 50
 G <- 10000
 
