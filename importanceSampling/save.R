@@ -1,7 +1,7 @@
 #WD <- "/mnt/glusterfs/zhh18/AW/AWFisher/importanceSampling_tmp"
-WD <- "/data/home/zhuo/research/Tseng/AW/sysdata"
+WD <- "/data/home/zhuo/research/Tseng/AW/sysdata/nn"
 
-kRange <- c(seq(2,128,1), 180, 300, 500, 1000)
+kRange <- c(seq(2,200,1), 300,500,1000)
 
 logPTarget <- NULL
 original <- NULL
@@ -29,7 +29,7 @@ for(k in kRange){
 		if(is.null(n1)){
 			n1 <- results$n1
 		} else {
-			stopifnot(all(n1 == results$n1))			
+			#stopifnot(all(n1 == results$n1))			
 		}
 		if(is.null(n0)){
 			n0 <- results$n0
@@ -65,3 +65,5 @@ dev.off()
 sysdata = list(logPTarget=logPTarget, original=original, nList=kRange, n1=n1, n0=n0)
 save(sysdata, file ="sysdata.rda", compress="xz")
 
+
+rownames(sysdata$original)[sysdata$original[,1] == 0.99]

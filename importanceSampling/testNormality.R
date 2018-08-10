@@ -1,3 +1,5 @@
+setwd("~/Desktop/AWFisher")
+
 devtools::install()
 
 library(AWFisher)
@@ -15,7 +17,7 @@ for(k in 2:1000){
 
 Rep <- 1000
 L <- 20#bad numbers: 20, 90
-for(L in 2:200){
+for(L in 2:1000){
 
 #p.values = matrix(rbeta(Rep*L, 1,1), ncol=L)
 p.values = matrix(runif(Rep*L), ncol=L)

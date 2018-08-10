@@ -75,22 +75,22 @@ result <- foreach(p = 1:length(pTargetList)) %dopar% {
 	kFolder <- paste0("k",k)
 	system(paste("mkdir -p", kFolder))
 	setwd(kFolder)
-		
-	
-	start <- Sys.time()
-	if(p==1){
-		a <- 1
-	} else {
-	    a <- uniroot(function(a, n, k, target) medianReturn(a, n, k, pmatrix0) - -log(target), 
-	            lower=1e-10,upper=1, n=n0, k = k, target = apTarget)$root		
-	}
-	awStats <- .C('importanceSampling_R',a=as.double(a),n=as.integer(n1),k=as.integer(k),
-				pTarget=as.double(apTarget),J=as.integer(length(apTarget)),awStat_vec=as.double(apTarget))$awStat_vec				
-	end <- Sys.time()
-	timeDiff <- end - start
-	results <- list(apTarget=apTarget, awStats=awStats, k=k, n1=n1, n0=n0, time=timeDiff)
 	filename <- paste0("awStat_k",k,"_apTarget_",signif(apTarget[1],1),".rdata")
-	save(results, file=filename)	
+	if(!file.exists(filename)){
+		start <- Sys.time()
+		if(p==1){
+			a <- 1
+		} else {
+		    a <- uniroot(function(a, n, k, target) medianReturn(a, n, k, pmatrix0) - -log(target), 
+		            lower=1e-10,upper=1, n=n0, k = k, target = apTarget)$root		
+		}
+		awStats <- .C('importanceSampling_R',a=as.double(a),n=as.integer(n1),k=as.integer(k),
+					pTarget=as.double(apTarget),J=as.integer(length(apTarget)),awStat_vec=as.double(apTarget))$awStat_vec				
+		end <- Sys.time()
+		timeDiff <- end - start
+		results <- list(apTarget=apTarget, awStats=awStats, k=k, n1=n1, n0=n0, time=timeDiff)
+		save(results, file=filename)			
+	}	
 }
 
 stopCluster(cl)

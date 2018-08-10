@@ -1,9 +1,9 @@
 cd '/data/home/zhuo/research/Tseng/AW/sysdata'
 
 n0=1e3
-n1=1e6
+n1=1e7
 
-for a in {51..200}
+for a in {65..200}
 do
 let "k=a"  # Increment inner loop counter.
 echo "Pass $k to args."
