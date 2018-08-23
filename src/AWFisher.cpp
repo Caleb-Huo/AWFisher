@@ -42,8 +42,8 @@ double pchisq(double x, int df)
        a = 0.5 * x;
 	   even = !(df & 1);
 
-       if (df > 1)
-               y = exp (-a);
+	   //if (df > 1)
+       y = exp (-a);
        s = (even ? y : (2.0 * _normcdf(-sqrt (x))));
 
 	   if (df > 2)
@@ -86,13 +86,13 @@ double pchisq(double x, int df)
 extern "C" void AWpvalue(double *best_stat, int *sum_weight, int *weights, 
 	double *pval, int *nrow, int *ncol)
 {
-	int nr, nc, nc1, i, j, sw;
+	int nr, nc, i, j, sw;
 	double *pv, *ptwice_pcumlog, twice_pcumlog, stat_new, best;
 	int *o, *pw;
 
 	nr = *nrow;
 	nc = *ncol;
-	nc1 = nc - 1;
+	//nc1 = nc - 1;
 
 	o = (int *)malloc(sizeof(int) * nc);
 	ptwice_pcumlog = (double *)malloc(sizeof(double) * nc);
