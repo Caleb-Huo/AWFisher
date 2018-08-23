@@ -25,7 +25,7 @@ AWFisher.pvalue <- function(p.values) {
 
     n = NCOL(p.values)
 	if(n<2 | n>100){
-		stop("number of studies K has to be >0 2 and <= 100.")
+		stop("number of studies K has to be >= 2 and <= 100.")
 	}
 
     out <- .C("AWpvalue", best_stat=rep(0, NROW(p.values)), sum_weight=as.integer(rep(0, NROW(p.values))), weights=as.integer(rep(0, length(p.values))),
