@@ -1,7 +1,7 @@
 #WD <- "/mnt/glusterfs/zhh18/AW/AWFisher/importanceSampling_tmp"
-WD <- "/data/home/zhuo/research/Tseng/AW/sysdata/nn"
+WD <- "/data/home/zhuo/research/Tseng/AW/sysdata/n8"
 
-kRange <- c(seq(2,200,1), 300,500,1000)
+kRange <- 2:100
 
 logPTarget <- NULL
 original <- NULL
