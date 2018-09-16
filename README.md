@@ -16,6 +16,14 @@ install_github("Caleb-Huo/AWFisher")
 
 * Arxiv preprint can be find here: https://arxiv.org/abs/1708.05084
 
+## Full tutorial
+
+* Including a real data example using mouse metabolism data of three tissues
+* Perform transcriptomic meta-analysis and differential expression pattern detection
+
+https://bayesmp.github.io
+
+
 ## Short tutorial
 
 * Currently, only K=2, 3, ..., 100 (number of studies) are allowed in the R package.

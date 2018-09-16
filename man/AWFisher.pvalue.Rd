@@ -7,7 +7,7 @@
 AWFisher.pvalue(p.values)
 }
 \arguments{
-\item{p.values}{Input G by K p-value matrix. Each row represent a gene and each column represent a study.}
+\item{p.values}{Input G by K p-value matrix. Each row represent a gene and each column represent a study. Note that K has to be >=2 and <=100.}
 }
 \value{
 A list consisting of AWFisher pvalues and AWweight.
