@@ -12,7 +12,7 @@ install_github("Caleb-Huo/AWFisher")
 
 ## Citation
 
-* P-value evaluation, variability index and biomarker categorization for adaptively weighted Fisher's meta-analysis method in omics applications. Zhiguang Huo, Shaowu Tang, Yongseok Park, George Tseng. (2018+, under review)
+* P-value evaluation, variability index and biomarker categorization for adaptively weighted Fisher's meta-analysis method in omics applications. Zhiguang Huo, Shaowu Tang, Yongseok Park, George Tseng. (2018+, Submitted)
 
 * Arxiv preprint can be find here: https://arxiv.org/abs/1708.05084
 
@@ -21,11 +21,12 @@ install_github("Caleb-Huo/AWFisher")
 * Including a real data example using mouse metabolism data of three tissues
 * Perform transcriptomic meta-analysis and differential expression pattern detection
 
-https://bayesmp.github.io
+http://htmlpreview.github.io/?https://github.com/Caleb-Huo/AWFisher/blob/master/vignettes/AWFisher.html
 
 
 ## Short tutorial
 
+* This short tutorial is about how to perform meta-analysis combining p-values from multiple studies.
 * Currently, only K=2, 3, ..., 100 (number of studies) are allowed in the R package.
 
 ```{R}
