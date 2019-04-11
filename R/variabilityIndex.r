@@ -35,7 +35,8 @@
 ##' 
 ##' 
 ##' result <- variabilityIndex(studies,function_limma,B=100,seed = 15213)
-##' head(result)
+##' head(result$varibility)
+##' head(result$stability)
 
 variabilityIndex <- function(studies,afunction,B=10, seed = 15213, silence=FALSE){
 
@@ -65,6 +66,8 @@ variabilityIndex <- function(studies,afunction,B=10, seed = 15213, silence=FALSE
 		}		
 	}
 
-	result <- Tscore * 4
+	varibility <- Tscore * 4
+	stability <- aveScore
+	list(varibility=varibility, stability=stability)
 }
 
