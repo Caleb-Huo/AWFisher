@@ -8,6 +8,7 @@
 ##' \item{weights}{G by K binary weight matrix W. $W_{gk} = 1$ represents for gene $g$, study $k$ contributes to the meta-analysis result. $W_{gk} = 0$ otherwise.}
 ##' @useDynLib AWFisher
 ##' @author Caleb
+##' @importFrom stats dist model.matrix p.adjust splinefun
 ##' @export
 ##' @examples
 ##' K <- 40
@@ -17,7 +18,8 @@
 ##' hist(res$pvalues, breaks=40)
 ##' table(rowSums(res$weights))
 ##' pvalues=res$pvalues[order(res$pvalues)]
-##' plot(-log10((1:NROW(pvalues))/(1+NROW(pvalues))), -log10(pvalues),xlab="theoretical quantile", ylab="observed quantile")
+##' plot(-log10((1:NROW(pvalues))/(1+NROW(pvalues))), 
+##' 	-log10(pvalues),xlab="theoretical quantile", ylab="observed quantile")
 ##' lines(c(0,100), c(0,100), col=2)
 
 AWFisher.pvalue <- function(p.values) {

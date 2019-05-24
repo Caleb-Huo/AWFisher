@@ -49,9 +49,9 @@ medianReturn <- function(a, n, k, pmatrix0) {
   }
   
   logweights <-  - k*log(a) - (a-1) * pCumLog[,k]
-  statNew = -pchisq(-2*pCumLog[,1], 2, lower.tail=F, log=T)
+  statNew = -pchisq(-2*pCumLog[,1], 2, lower.tail=FALSE, log=TRUE)
   for(i in 2:k) 
-    statNew = pmax(statNew, -pchisq(-2*pCumLog[,i], 2*i, lower.tail=F, log=T))
+    statNew = pmax(statNew, -pchisq(-2*pCumLog[,i], 2*i, lower.tail=FALSE, log=TRUE))
 
   ordStat = order(-statNew)
   logProbNew = -log(cumsum(exp(logweights[ordStat]))/(n+1))

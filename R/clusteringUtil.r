@@ -1,5 +1,4 @@
-permuteX <- function(dataExp,labels,seed=15213){
-	set.seed(seed)
+permuteX <- function(dataExp,labels){
     permx <- list()
 	for(i in 1:length(dataExp)){
 		X <- matrix(,nrow=nrow(dataExp[[i]]),ncol(dataExp[[i]]))
@@ -17,15 +16,14 @@ permuteX <- function(dataExp,labels,seed=15213){
 	permx	
 }
 
-permuteLabels <- function(studies,seed=15213){
-	set.seed(seed)
+permuteLabels <- function(studies){
 	for(k in 1:length(studies)){						
 		adata <- studies[[k]]$data
 		alabel <- studies[[k]]$label
 		uniqueLabels <- unique(alabel)
 		for(j in 1:length(uniqueLabels)){
 			aalabel <- which(uniqueLabels[j]==alabel)
-			adata[,aalabel] <- adata[,sample(aalabel, replace = T)]
+			adata[,aalabel] <- adata[,sample(aalabel, replace = TRUE)]
 			studies[[k]]$data <- adata
 		}
 	}

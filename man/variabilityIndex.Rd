@@ -4,8 +4,7 @@
 \alias{variabilityIndex}
 \title{Variability Index}
 \usage{
-variabilityIndex(studies, afunction, B = 10, seed = 15213,
-  silence = FALSE)
+variabilityIndex(studies, afunction, B = 10, silence = FALSE)
 }
 \arguments{
 \item{studies}{a list of K studies. Each element (kth study) of the list is another list consisting gene expression matrix and and label information.}
@@ -14,9 +13,7 @@ variabilityIndex(studies, afunction, B = 10, seed = 15213,
 
 \item{B}{number of permutation should be used. B=1000 is suggested.}
 
-\item{seed}{Random seed to reproduce the result.}
-
-\item{DEindex}{If NULL, BH method will be applied to p-values and FDR 0.05 will be used. User could specify a logical vector as DEindex.}
+\item{silence}{If TRUE, will print out the bootstrapping procedure.}
 }
 \value{
 A list consisting of biomarker categrorization result.
@@ -51,7 +48,7 @@ for(k in 1:K){
 }
 
 
-result <- variabilityIndex(studies,function_limma,B=100,seed = 15213)
+result <- variabilityIndex(studies,function_limma,B=100)
 head(result)
 }
 \author{

@@ -5,6 +5,7 @@
 ##' @param astudy A list contains a data matrix and a vector of group label
 ##' @return A list of pvalue and effect size
 ##' @author Caleb
+##' @import limma
 ##' @export
 ##' @examples
 ##'

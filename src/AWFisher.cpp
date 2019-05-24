@@ -22,12 +22,13 @@ g++ -O2 -fPIC -shared AW_weight.cpp pchisq.c -o AW_weight.so
 //#define        ex(x)             (((x) < -BIGX) ? 0.0 : exp (x))
 
 
-
+// [[register]]
 __inline double _normcdf(double x)
 {
 	return .5 * (1. + erf(x / CONST_SQRT2));
 }
 
+// [[register]]
 double pchisq(double x, int df)
 {
        double a, y, s;
@@ -83,53 +84,56 @@ double pchisq(double x, int df)
 }
 
 
-extern "C" void AWpvalue(double *best_stat, int *sum_weight, int *weights, 
-	double *pval, int *nrow, int *ncol)
-{
-	int nr, nc, i, j, sw;
-	double *pv, *ptwice_pcumlog, twice_pcumlog, stat_new, best;
-	int *o, *pw;
-
-	nr = *nrow;
-	nc = *ncol;
-	//nc1 = nc - 1;
-
-	o = (int *)malloc(sizeof(int) * nc);
-	ptwice_pcumlog = (double *)malloc(sizeof(double) * nc);
-
-	pv = pval;
-	pw = weights;
-	for (i = 0; i < nr; ++i)
+extern "C" {
+// [[register]]
+	void AWpvalue(double *best_stat, int *sum_weight, int *weights, 
+		double *pval, int *nrow, int *ncol)
 	{
-		QuickSort1(nc, pv, o);
+		int nr, nc, i, j, sw;
+		double *pv, *ptwice_pcumlog, twice_pcumlog, stat_new, best;
+		int *o, *pw;
 
-		sw = 0;
+		nr = *nrow;
+		nc = *ncol;
+		//nc1 = nc - 1;
 
-		twice_pcumlog = -2. * log(pv[o[0]]);
-		best = pchisq(twice_pcumlog, 2);
-		for (j = 1; j < nc; ++j)
+		o = (int *)malloc(sizeof(int) * nc);
+		ptwice_pcumlog = (double *)malloc(sizeof(double) * nc);
+
+		pv = pval;
+		pw = weights;
+		for (i = 0; i < nr; ++i)
 		{
-			twice_pcumlog -= 2. * log(pv[o[j]]);
-			stat_new = pchisq(twice_pcumlog, j + j + 2);
-			if (stat_new < best)
+			QuickSort1(nc, pv, o);
+
+			sw = 0;
+
+			twice_pcumlog = -2. * log(pv[o[0]]);
+			best = pchisq(twice_pcumlog, 2);
+			for (j = 1; j < nc; ++j)
 			{
-				best = stat_new;
-				sw = j;
+				twice_pcumlog -= 2. * log(pv[o[j]]);
+				stat_new = pchisq(twice_pcumlog, j + j + 2);
+				if (stat_new < best)
+				{
+					best = stat_new;
+					sw = j;
+				}
+
+			}
+			best_stat[i] = -log(best);
+			sum_weight[i] = sw;
+		
+			for (j = 0; j <= sw; ++j)
+			{
+				pw[o[j]] = 1;
 			}
 
-		}
-		best_stat[i] = -log(best);
-		sum_weight[i] = sw;
-		
-		for (j = 0; j <= sw; ++j)
-		{
-			pw[o[j]] = 1;
+			pv += nc;
+			pw += nc;
 		}
 
-		pv += nc;
-		pw += nc;
-	}
-
-	free(ptwice_pcumlog);
-	free(o);
+		free(ptwice_pcumlog);
+		free(o);
+	}	
 }

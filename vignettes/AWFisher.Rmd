@@ -8,64 +8,79 @@ output:
     toc_depth: 2
     number_sections: true
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  %\VignetteIndexEntry{AWFisher}
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteEncoding{UTF-8}{inputenc}
 ---
 
-```{r setup, include = F}
+
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-options(stringsAsFactors = F)
-
+options(stringsAsFactors = FALSE)
 ```
 
 
 # Introduction
 
-A tutorial to guide through the usage for the AWFisher R package.
+This is a tutorial for the usage of the AWFisher package.
 A real data example of the multiple-tissue mouse metabolism data is used.
-The following parts are included:
+The major contents of this tutorial includes:
 
 - How to prepare the input for AWFisher.
 - Transcriptomic meta analysis.
-- Differential expression pattern detection.
+- Meta-analysis differential expression pattern (meta-pattern) detection.
 
-# How to install the package
+# About the package
 
-The package is available on GitHub page ([https://github.com/Caleb-Huo/AWFisher](https://github.com/Caleb-Huo/AWFisher))
+## How to install the package
+
+The package is available on GitHub page  ([https://github.com/Caleb-Huo/AWFisher](https://github.com/Caleb-Huo/AWFisher))
+and submitted to Bioconductor (to be updated)
 
 To install the package, 
 
-```{r, eval=F}
+```{r, eval=FALSE}
 library(devtools)
 install_github("Caleb-Huo/AWFisher")
 ```
 
-# How to cite the package
+## How to cite the package
 
-The paper is accepted by the annuals of applied statistics.
-
-- Huo, Zhiguang, Shaowu Tang, Yongseok Park, and George Tseng. "P-value evaluation, variability index and biomarker categorization for deceptively weighted Fisher's meta-analysis method in omics applications." arXiv preprint arXiv:1708.05084 (2018+). (Submitted)
+- Huo, Zhiguang, Shaowu Tang, Yongseok Park, and George Tseng. "P-value evaluation, variability index and biomarker categorization for deceptively weighted Fisher's meta-analysis method in omics applications." arXiv preprint arXiv:1708.05084 (2019+). (under review in *Bioinformatics*)
 
 The pre-print can be found on ArXiv ([https://arxiv.org/pdf/1708.05084.pdf](https://arxiv.org/pdf/1708.05084.pdf))
 
+## Maintainer
+
+Zhiguang Huo (zhuo@ufl.edu)
 
 # How to prepare the input for AWFisher
 
 Note that you may need internet connection to read in the data.
 
-## Include packages
-```{r}
-# include necessary packages
-library(AWFisher) # Include the BayesMP package
-library(limma) # Will perform differential expression analysis
-```
+## Description about the example data -- multi-tissue mouse metabolism transcriptomic data
 
-## Read in data
+The purpose of the multi-tissue mouse metabolism transcriptomic data is to study how the gene expression changes with respect to the energy deficiency using mouse models. 
+Very long-chain acyl-CoA dehydrogenase (VLCAD) deficiency was found to be associated with
+energy metabolism disorder in children.
+Two genotypes of the mouse model - wild type (VLCAD +/+) and VLCAD-deficient (VLCAD -/-) -
+were studied for three types of tissues (brown fat, liver, heart) with 3 to 4 mice in each genotype group.
+The sample size information is available in the table below.
+A total of 6,883 genes are available in this example dataset.
+
+Tissue        | Wild Type   | VLCAD-deficent
+------------- | ------------| ------------
+Brown Fat     | 4           | 4
+Heart         | 3           | 4
+Skeleton      | 4           | 4  
+
+
+## Read in the example data
+
 ```{r}
 # read in the data
 
@@ -84,24 +99,21 @@ dataExp <- list(brown=data_brown, heart=data_heart, liver=data_liver)
 sapply(dataExp, dim)
 
 # Check the head of the three studies
-sapply(dataExp, head)
+# sapply(dataExp, function(x) head(x,n=2))
 
-# perform differential expression analysis for each of these three tissues.
-
-# Create an empty matrix to store Z value. 
+# Before performing differential expression analysis for each of these three tissues.
+# Create an empty matrix to store p-value. 
 # Each row represents a gene and each column represent a study/tissue. 
-# Note that Z value matrix is the input for BayesMP method. 
-# Z value can be calculated by inverse CDF of the p-value from differential expression analysis. 
-# A positive Z value indicates that the gene is upregulated in that study/tissue.
 
-pmatrix <- matrix(0,nrow=nrow(dataExp[[1]]),ncol=length(dataExp)) ## this is the input p-value matrix. ## Each row represent a gene and each column represents a study/tissue.
+pmatrix <- matrix(0,nrow=nrow(dataExp[[1]]),ncol=length(dataExp)) 
 rownames(pmatrix) <- rownames(dataExp[[1]])
 colnames(pmatrix) <- names(dataExp)
 ```
 
-
-## Perform differential expression analysis in each study
+## Prepare the input p-value matrix -- perform differential expression analysis in each study
 ```{r}
+library(limma) # Include the limma package to perform differential expression analyses for the microarray data
+
 for(s in 1:length(dataExp)){
 	adata <- dataExp[[s]]
 	ControlLabel = grep('wt',colnames(adata))
@@ -117,29 +129,31 @@ for(s in 1:length(dataExp)){
 	pmatrix[,s] <- fit$p.value[,2]
 }
 
-head(pmatrix)
+head(pmatrix, n=2) ## look at the head of the p-value matrix
 ```
 
 
-# Transcriptomic meta analysis.
 
-
+# Perform AW Fisher meta analysis using the multi-tissue mouse metabolism transcriptomic data
 
 ```{r}
-# WD <- '~/Desktop/'
-# setwd(WD) # You can set the working directory here. Some MCMC results will be saved here.
+library(AWFisher) # Include the AWFisher package
 
-res = AWFisher.pvalue(pmatrix) ## Perform AW Fisehr meta analysis
+# WD <- '~/Desktop/'
+# setwd(WD) # You can set your working directory here. 
+
+res <- AWFisher.pvalue(pmatrix) ## Perform AW Fisehr meta analysis
 qvalue <- p.adjust(res$pvalue, "BH") ## Perform BH correction to control for multiple comparison.
 sum(qvalue < 0.05) ## Differentially expressed genes with FDR 5%
 head(res$weights) ## Show the AW weight of the first few genes
 ```
 
-# Differential expression pattern detection.
+# Differential expression pattern (meta-pattern) detection.
 
-## prepare data and calculate dissimilarity matrix
+## Calculate dissimilarity matrix
 
 ```{r}
+## prepare the data to feed function biomarkerCategorization
 studies <- NULL
 for(s in 1:length(dataExp)){
 	adata <- dataExp[[s]]
@@ -152,26 +166,26 @@ for(s in 1:length(dataExp)){
   studies[[s]] <- list(data=adata, label=label)
 }
 
+## See help file about about how to use function biomarkerCategorization.
+## You may need to wrap up a function (i.e., function_limma) to perform differential expression analysis for each study.
 
-
-result <- biomarkerCategorization(studies,function_limma,B=100,DEindex=NULL,seed = 15213)
+result <- biomarkerCategorization(studies,function_limma,B=100,DEindex=NULL)
 sum(result$DEindex) ## print out DE index at FDR 5%
-head(result$varibility) ## print out the head of variability index
+head(result$varibility, n=2) ## print out the head of variability index
 print(result$dissimilarity[1:4,1:4]) ## print out the dissimilarity matrix
 ```
 
-## Apply tight clustering algorithm
+## Apply the tight clustering algorithm to get gene modules with unique meta-pattern
 
 ```{r}
+library(tightClust) ## load tightClust package
+
 tightClustResult <- tight.clust(result$dissimilarity, target=4, k.min=15, random.seed=15213)
 clusterMembership <- tightClustResult$cluster
-
 ```
 
 
-## Visualization
-
-### Visualize the heatmap of the first differential expression pattern for all three tissues.
+## Visualize the heatmap of the first meta-pattern module for all three tissues.
 ```{r, fig.show='hold'}
 
 for(s in 1:length(dataExp)){

@@ -5,7 +5,7 @@
 \title{biomarker categrorization}
 \usage{
 biomarkerCategorization(studies, afunction, B = 10, DEindex = NULL,
-  fdr = NULL, seed = 15213, silence = FALSE)
+  fdr = NULL, silence = FALSE)
 }
 \arguments{
 \item{studies}{a list of K studies. Each element (kth study) of the list is another list consisting gene expression matrix and and label information.}
@@ -16,7 +16,9 @@ biomarkerCategorization(studies, afunction, B = 10, DEindex = NULL,
 
 \item{DEindex}{If NULL, BH method will be applied to p-values and FDR 0.05 will be used. User could specify a logical vector as DEindex.}
 
-\item{seed}{Random seed to reproduce the result.}
+\item{fdr}{Default is 0.05. The co-membership matrix calculation will base on genes with this specified fdr.}
+
+\item{silence}{If TRUE, will print out the bootstrapping procedure.}
 }
 \value{
 A list consisting of biomarker categrorization result.
@@ -53,7 +55,7 @@ for(k in 1:K){
 }
 
 
-result <- biomarkerCategorization(studies,function_limma,B=100,DEindex=NULL,seed = 15213)
+result <- biomarkerCategorization(studies,function_limma,B=100,DEindex=NULL)
 sum(result$DEindex)
 head(result$varibility)
 print(result$dissimilarity[1:4,1:4])
