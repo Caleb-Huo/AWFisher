@@ -82,18 +82,16 @@ Skeleton      | 4           | 4
 ## Read in the example data
 
 ```{r}
-# read in the data
+library(AWFisher) # Include the AWFisher package
 
-data_brown <- read.csv("https://bayesmp.github.io/data/mouseMetabolism/data_brown.csv", row.names = 1)
-data_heart <- read.csv("https://bayesmp.github.io/data/mouseMetabolism/data_heart.csv", row.names = 1)
-data_liver <- read.csv("https://bayesmp.github.io/data/mouseMetabolism/data_liver.csv", row.names = 1)
+# load the data
+data(data_mouseMetabolism)
 
 # Verify gene names match across three tissues
-all(rownames(data_brown) == rownames(data_heart))
-all(rownames(data_brown) == rownames(data_liver))
+all(rownames(data_mouseMetabolism$brown) == rownames(data_mouseMetabolism$heart))
+all(rownames(data_mouseMetabolism$brown) == rownames(data_mouseMetabolism$liver))
 
-# Combime these three studies as list
-dataExp <- list(brown=data_brown, heart=data_heart, liver=data_liver)
+dataExp <- data_mouseMetabolism
 
 # Check the dimension of the three studies
 sapply(dataExp, dim)
@@ -137,8 +135,6 @@ head(pmatrix, n=2) ## look at the head of the p-value matrix
 # Perform AW Fisher meta analysis using the multi-tissue mouse metabolism transcriptomic data
 
 ```{r}
-library(AWFisher) # Include the AWFisher package
-
 # WD <- '~/Desktop/'
 # setwd(WD) # You can set your working directory here. 
 
@@ -167,6 +163,7 @@ for(s in 1:length(dataExp)){
 }
 
 ## See help file about about how to use function biomarkerCategorization.
+## Set B = 1,000 (at least) for real data application
 ## You may need to wrap up a function (i.e., function_limma) to perform differential expression analysis for each study.
 
 result <- biomarkerCategorization(studies,function_limma,B=100,DEindex=NULL)
