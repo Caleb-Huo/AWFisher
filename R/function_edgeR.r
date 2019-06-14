@@ -31,22 +31,22 @@
 ##' sum(fdr<=0.05)
 ##'
 
-function_edgeR <- function(astudy){
-	alabel <- astudy$label
-	aData <- astudy$data
-	
-	group<-factor(alabel)
-	d=DGEList(counts=aData,group=group)
-	d <- calcNormFactors(d) # normalization part
-	design=model.matrix(~group)
-	d=estimateGLMCommonDisp(d)
-	d=estimateGLMTrendedDisp(d)
-	d=estimateGLMTagwiseDisp(d)
-	fit <- glmFit(d, design)
-	lrt <- glmLRT(fit, coef=2)
-	apvalue=lrt$table[,4]
-	aeffectsize <- fit$coefficient[,2]
-	
-	return(list(pvalue=apvalue, effectSize=aeffectsize))
+function_edgeR <- function(astudy) {
+    alabel <- astudy$label
+    aData <- astudy$data
+    
+    group <- factor(alabel)
+    d = DGEList(counts = aData, group = group)
+    d <- calcNormFactors(d)  # normalization part
+    design = model.matrix(~group)
+    d = estimateGLMCommonDisp(d)
+    d = estimateGLMTrendedDisp(d)
+    d = estimateGLMTagwiseDisp(d)
+    fit <- glmFit(d, design)
+    lrt <- glmLRT(fit, coef = 2)
+    apvalue = lrt$table[, 4]
+    aeffectsize <- fit$coefficient[, 2]
+    
+    return(list(pvalue = apvalue, effectSize = aeffectsize))
 }
 

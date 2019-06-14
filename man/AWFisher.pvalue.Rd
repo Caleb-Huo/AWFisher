@@ -7,12 +7,17 @@
 AWFisher.pvalue(p.values)
 }
 \arguments{
-\item{p.values}{Input G by K p-value matrix. Each row represent a gene and each column represent a study. Note that K has to be >=2 and <=100.}
+\item{p.values}{Input G by K p-value matrix. 
+Each row represent a gene and each column represent a study. 
+Note that K has to be >=2 and <=100.}
 }
 \value{
 A list consisting of AWFisher pvalues and AWweight.
 \item{pvalues}{AWFisher pvalues.}
-\item{weights}{G by K binary weight matrix W. $W_{gk} = 1$ represents for gene $g$, study $k$ contributes to the meta-analysis result. $W_{gk} = 0$ otherwise.}
+\item{weights}{G by K binary weight matrix W. 
+$W_{gk} = 1$ represents for gene $g$, 
+study $k$ contributes to the meta-analysis result. 
+$W_{gk} = 0$ otherwise.}
 }
 \description{
 R package for fast computing for adaptively weighted fisher's method
@@ -29,7 +34,7 @@ hist(res$pvalues, breaks=40)
 table(rowSums(res$weights))
 pvalues=res$pvalues[order(res$pvalues)]
 plot(-log10((1:NROW(pvalues))/(1+NROW(pvalues))), 
-	-log10(pvalues),xlab="theoretical quantile", ylab="observed quantile")
+    -log10(pvalues),xlab='theoretical quantile', ylab='observed quantile')
 lines(c(0,100), c(0,100), col=2)
 }
 \author{

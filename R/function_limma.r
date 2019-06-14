@@ -31,15 +31,15 @@
 ##' sum(fdr<=0.05)
 ##'
 
-function_limma <- function(astudy){
-	alabel <- astudy$label
-	aData <- astudy$data
-
-	adesign = cbind(rep(1,length(alabel)),alabel)
-	afit <- lmFit(aData,adesign)
-	afit <- eBayes(afit)
-
-	aeffectsize <- afit$coefficients[,2]
-	apvalue <- afit$p.value[,2]
-	return(list(pvalue=apvalue, effectSize=aeffectsize))
+function_limma <- function(astudy) {
+    alabel <- astudy$label
+    aData <- astudy$data
+    
+    adesign = cbind(rep(1, length(alabel)), alabel)
+    afit <- lmFit(aData, adesign)
+    afit <- eBayes(afit)
+    
+    aeffectsize <- afit$coefficients[, 2]
+    apvalue <- afit$p.value[, 2]
+    return(list(pvalue = apvalue, effectSize = aeffectsize))
 }
