@@ -25,7 +25,7 @@
 ##' \item{varibility}{Varibility index for all genes}
 ##' \item{dissimilarity}{Dissimilarity matrix of genes of DEindex==TRUE}
 ##' \item{DEindex}{DEindex for Dissimilarity}
-##' @author Caleb
+##' @author Zhiguang Huo
 ##' @export
 ##' @examples
 ##' N0 = 10
@@ -56,17 +56,16 @@
 ##' print(result$dissimilarity[1:4,1:4])
 
 biomarkerCategorization <- 
-  function(studies, afunction, B = 10, DEindex = NULL, fdr = NULL, silence = FALSE) {
-    if (B <= 2) 
-        stop("B has be to greater than 2!")
-    if (is.null(fdr)) 
-        fdr = 0.05
+  function(studies, afunction, B = 10, 
+           DEindex = NULL, fdr = NULL, silence = FALSE) {
+    if (B <= 2) stop("B has be to greater than 2!")
+    if (is.null(fdr)) fdr = 0.05
     if (is.null(DEindex)) {
         cat("generate DE index since it is NULL", "\n")
         cat("based on AW fdr ", fdr, "\n")
         res.obs <- getPvalueAll(studies, afunction)
         pval.obs <- res.obs$p.matrix
-        awres.obs <- AWFisher.pvalue(pval.obs)
+        awres.obs <- AWFisher_pvalue(pval.obs)
         awres.obs$es <- res.obs$es.matrix
         fdr.obs <- p.adjust(awres.obs$pvalues, "BH")
         DEindex <- fdr.obs <= fdr
@@ -76,10 +75,10 @@ biomarkerCategorization <-
     pval.null <- NULL
     weight.null <- NULL
     selfDistDirection <- matrix(0, nrow = sum(DEindex), ncol = sum(DEindex))
-    
     if (!silence) 
         cat("calculating permutated score, b = 1,2,..., B (= ", 
-            B, ")  [one \".\" per sample]:\n", sep = "")
+            B, 
+            ")  [one \".\" per sample]:\n", sep = "")
     for (b in seq_len(B)) {
         cat(".", if (b%%50 == 0) 
             paste(b, "\n"))
@@ -87,7 +86,7 @@ biomarkerCategorization <-
         res.null <- getPvalueAll(studies.b, afunction)
         pval.null <- res.null$p.matrix
         es.null <- res.null$es.matrix
-        awres.null <- AWFisher.pvalue(pval.null)
+        awres.null <- AWFisher_pvalue(pval.null)
         weight.null[[b]] <- awres.null$weights
         aDEweightDirection <- (awres.null$weights * sign(es.null))[DEindex, ]
         maxDistDirection <- dist(aDEweightDirection, "maximum")
@@ -101,7 +100,8 @@ biomarkerCategorization <-
     }
     result <- list(varibility = Tscore * 4, 
                    dissimilarity = selfDistDirection, 
-                   AWres = awres.obs, DEindex = DEindex)
+                   AWres = awres.obs, 
+                   DEindex = DEindex)
     result
 }
 

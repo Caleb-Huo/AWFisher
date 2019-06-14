@@ -54,9 +54,9 @@ K = 4
 
 studies <- NULL
 set.seed(15213)
-for(k in 1:K){
+for(k in seq_len(K)){
     astudy <- matrix(rnorm(N0*2*G),nrow=G,ncol=N0*2)
-    ControlLabel <- 1:N0
+    ControlLabel <- seq_len(N0)
     caseLabel <- (N0 + 1):(2*N0)
 
     astudy[1:GDEp,caseLabel] <- astudy[1:GDEp,caseLabel] + 2
@@ -74,5 +74,5 @@ head(result$varibility)
 print(result$dissimilarity[1:4,1:4])
 }
 \author{
-Caleb
+Zhiguang Huo
 }

@@ -3,7 +3,8 @@
 ##' Variability Index via boostrap AW weight.
 ##' @title Variability Index
 ##' @param studies a list of K studies. 
-##' Each element (kth study) of the list is another list consisting gene expression matrix and and label information. 
+##' Each element (kth study) of the list is another list consisting 
+##' gene expression matrix and and label information. 
 ##' @param afunction A function for DE analysis. 
 ##' Options can be function_limma or function_edgeR. 
 ##' Default option is function_limma. 
@@ -15,7 +16,7 @@
 ##' @param silence If TRUE, will print out the bootstrapping procedure.
 ##' @return A list consisting of biomarker categrorization result.
 ##' \item{varibility}{Varibility index for all genes}
-##' @author Caleb
+##' @author Zhiguang Huo
 ##' @export
 ##' @examples
 ##' N0 = 10
@@ -44,7 +45,6 @@
 ##' head(result)
 
 variabilityIndex <- function(studies, afunction, B = 10, silence = FALSE) {
-    
     Tscore <- 0
     pval.null <- NULL
     weight.null <- NULL
@@ -54,7 +54,9 @@ variabilityIndex <- function(studies, afunction, B = 10, silence = FALSE) {
     }
     
     if (!silence) 
-        cat("calculating permutated score, b = 1,2,..., B (= ", B, ")  [one \".\" per sample]:\n", sep = "")
+        cat("calculating permutated score, b = 1,2,..., B (= ", 
+            B, 
+            ")  [one \".\" per sample]:\n", sep = "")
     for (b in seq_len(B)) {
         cat(".", if (b%%50 == 0) 
             paste(b, "\n"))
@@ -62,7 +64,7 @@ variabilityIndex <- function(studies, afunction, B = 10, silence = FALSE) {
         res.null <- getPvalueAll(studies.b, afunction)
         pval.null <- res.null$p.matrix
         
-        awres.null <- AWFisher.pvalue(pval.null)
+        awres.null <- AWFisher_pvalue(pval.null)
         weight.null[[b]] <- awres.null$weights
     }  ## b for end of B
     cat("\n", "calculating variability index", "\n")

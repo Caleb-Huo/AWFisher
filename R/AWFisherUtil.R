@@ -3,6 +3,6 @@ aw.fisher.stat <- function(pstat, n) {
     
     ##### Estimating ###########
     f = splinefun(c(0, sysdata$original[index, ]), 
-        c(0, sysdata[["logPTarget"]]), method = "monoH.FC")
+                  c(0, sysdata[["logPTarget"]]), method = "monoH.FC")
     exp(-f(pstat))
 }

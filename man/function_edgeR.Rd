@@ -2,7 +2,7 @@
 % Please edit documentation in R/function_edgeR.r
 \name{function_edgeR}
 \alias{function_edgeR}
-\title{use limma function to get pvalue}
+\title{use edgeR function to get pvalue}
 \usage{
 function_edgeR(astudy)
 }
@@ -13,10 +13,10 @@ function_edgeR(astudy)
 A list of pvalue and effect size
 }
 \description{
-use limma function to get pvalue
+use edgeR function to get pvalue
 }
 \details{
-use limma function to get pvalue
+use edgeR function to get pvalue
 }
 \examples{
 
@@ -43,5 +43,5 @@ sum(fdr<=0.05)
 
 }
 \author{
-Caleb
+Zhiguang Huo
 }

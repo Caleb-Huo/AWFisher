@@ -1,10 +1,10 @@
-##' use limma function to get pvalue
+##' use edgeR function to get pvalue
 ##'
-##' use limma function to get pvalue
-##' @title use limma function to get pvalue
+##' use edgeR function to get pvalue
+##' @title use edgeR function to get pvalue
 ##' @param astudy A list contains a data matrix and a vector of group label
 ##' @return A list of pvalue and effect size
-##' @author Caleb
+##' @author Zhiguang Huo
 ##' @import edgeR 
 ##' @export
 ##' @examples

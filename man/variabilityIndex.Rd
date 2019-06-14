@@ -8,7 +8,8 @@ variabilityIndex(studies, afunction, B = 10, silence = FALSE)
 }
 \arguments{
 \item{studies}{a list of K studies. 
-Each element (kth study) of the list is another list consisting gene expression matrix and and label information.}
+Each element (kth study) of the list is another list consisting 
+gene expression matrix and and label information.}
 
 \item{afunction}{A function for DE analysis. 
 Options can be function_limma or function_edgeR. 
@@ -59,5 +60,5 @@ result <- variabilityIndex(studies,function_limma,B=100)
 head(result)
 }
 \author{
-Caleb
+Zhiguang Huo
 }
