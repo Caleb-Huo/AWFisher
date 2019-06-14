@@ -8,6 +8,7 @@ Maintainer: Zhiguang Huo <zhuo@ufl.edu>
 biocViews: StatisticalMethod, Software
 VignetteBuilder: knitr
 Description: Implementation of the adaptively weighted fisher's method, including fast p-value computing, variability index, and meta-pattern.
+License: GPL-3
 Depends: R (>= 3.6)
 Imports: edgeR, limma, stats
 BugReports: https://github.com/Caleb-Huo/AWFisher/issues
