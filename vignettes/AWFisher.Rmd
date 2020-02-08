@@ -82,9 +82,10 @@ BiocManager::install("AWFisher")
 
 ## How to cite the package
 
-- Huo, Zhiguang, Shaowu Tang, Yongseok Park, and George Tseng. "P-value evaluation, variability index and biomarker categorization for deceptively weighted Fisher's meta-analysis method in omics applications." arXiv preprint arXiv:1708.05084 (2019+). (under review in *Bioinformatics*)
 
-The pre-print can be found on ArXiv ([https://arxiv.org/pdf/1708.05084.pdf](https://arxiv.org/pdf/1708.05084.pdf))
+* Huo, Z., Tang, S., Park, Y. and Tseng, G., 2020. P-value evaluation, variability index and biomarker categorization for adaptively weighted Fisher’s meta-analysis method in omics applications. *Bioinformatics*, 36(2), pp.524-532.
+
+* The manuscript can be found here: https://www.ncbi.nlm.nih.gov/pubmed/31359040
 
 ## Maintainer
 

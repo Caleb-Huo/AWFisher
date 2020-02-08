@@ -1,8 +1,8 @@
 Package: AWFisher
 Type: Package
 Title: An R package for fast computing for adaptively weighted fisher's method
-Version: 0.99.4
-Date: 2019-06-21
+Version: 1.0.0
+Date: 2020-02-08
 Author: Zhiguang Huo
 Maintainer: Zhiguang Huo <zhuo@ufl.edu>
 biocViews: StatisticalMethod, Software
@@ -13,6 +13,6 @@ Depends: R (>= 3.6)
 Imports: edgeR, limma, stats
 BugReports: https://github.com/Caleb-Huo/AWFisher/issues
 Suggests: knitr, tightClust
-Packaged: 2019-06-21 01:12:24 UTC; Caleb
+Packaged: 2020-02-08 01:12:24 EST; Caleb
 RoxygenNote: 6.1.1
 NeedsCompilation: no

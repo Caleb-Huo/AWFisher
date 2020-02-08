@@ -12,9 +12,9 @@ install_github("Caleb-Huo/AWFisher")
 
 ## Citation
 
-* P-value evaluation, variability index and biomarker categorization for adaptively weighted Fisher's meta-analysis method in omics applications. Zhiguang Huo, Shaowu Tang, Yongseok Park, George Tseng. (2018+, Submitted)
+* Huo, Z., Tang, S., Park, Y. and Tseng, G., 2020. P-value evaluation, variability index and biomarker categorization for adaptively weighted Fisher’s meta-analysis method in omics applications. *Bioinformatics*, 36(2), pp.524-532.
 
-* Arxiv preprint can be find here: https://arxiv.org/abs/1708.05084
+* The manuscript can be found here: https://www.ncbi.nlm.nih.gov/pubmed/31359040
 
 ## Full tutorial
 
