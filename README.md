@@ -37,7 +37,7 @@ G <- 10000 ## simulate G genes
 
 set.seed(15213)
 p.values = matrix(runif(K*G), ncol=K)
-res = AWFisher.pvalue(p.values)
+res = AWFisher_pvalue(p.values)
 
 hist(res$pvalues, breaks=40)
 
