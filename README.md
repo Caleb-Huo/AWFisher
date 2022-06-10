@@ -28,6 +28,7 @@ http://htmlpreview.github.io/?https://github.com/Caleb-Huo/AWFisher/blob/master/
 
 * This short tutorial is about how to perform meta-analysis combining p-values from multiple studies.
 * Currently, only K=2, 3, ..., 100 (number of studies) are allowed in the R package.
+* **The input should be a matrix. If not, please convert the data to a matrix (i.e., as.matrix()).**
 
 ```{R}
 library(AWFisher)
@@ -36,7 +37,7 @@ K <- 50 ## combining K studies
 G <- 10000 ## simulate G genes
 
 set.seed(15213)
-p.values = matrix(runif(K*G), ncol=K)
+p.values = matrix(runif(K*G), ncol=K) ## This should be a matrix (if not, try as.matrix) instead of a dataframe.
 res = AWFisher_pvalue(p.values)
 
 hist(res$pvalues, breaks=40)
